@@ -1,10 +1,30 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-	res.status(200).send({
-		message: 'Profile works'
-	});
-});
+// load profile model
+const Profile = require('../../models/Profile');
+// load user models
+const User = require('../../models/User');
+
+router.get(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		const errors = {};
+
+		Profile.findOne({ user: req.user.id })
+			.then((profile) => {
+				if (!profile) {
+					errors.noprofile = 'There is no profile for this user';
+					return res.status(404).json({ ...errors });
+				}
+
+				return res.status(200).json({ ...profile });
+			})
+			.catch((err) => res.status(404).json(err));
+	}
+);
 
 module.exports = router;
