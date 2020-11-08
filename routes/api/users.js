@@ -1,6 +1,9 @@
 const express = require('express');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const privateKey = require('../../config/keys').privateKey;
+
 const router = express.Router();
 
 // load user model
@@ -31,7 +34,7 @@ router.post('/register', (req, res) => {
 					if (err) {
 						res
 							.status(500)
-							.json({ password: 'cannot perform password hashing' });
+							.json({ message: 'cannot perform password hashing' });
 					}
 
 					newUser.password = hash;
@@ -59,7 +62,20 @@ router.post('/login', (req, res) => {
 
 		bcrypt.compare(password, user.password).then((isMatch) => {
 			if (isMatch) {
-				res.status(200).json({ message: 'Success' });
+				const payload = {
+					id: user.id,
+					email: user.email,
+					name: user.name,
+					avatar: user.avatar
+				};
+
+				jwt.sign(payload, privateKey, { expiresIn: 3600 }, (err, token) => {
+					if (err) {
+						res.status(500).json({ message: 'token cannot be generated' });
+					}
+
+					res.status(200).json({ success: true, token: `Bearer ${token}` });
+				});
 			} else {
 				res.status(400).json({ password: 'password is incorrect' });
 			}
