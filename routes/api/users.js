@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const privateKey = require('../../config/keys').privateKey;
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 // load user model
 const User = require('../../models/User');
 
@@ -62,11 +63,19 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+	const { errors, isValid } = validateLoginInput(req.body);
+
+	// validate login payload
+	if (!isValid) {
+		return res.status(400).json({ ...errors });
+	}
+
 	const { email, password } = req.body;
 
 	User.findOne({ email }).then((user) => {
 		if (!user) {
-			return res.status(404).json({ email: 'user cannot be found' });
+			errors.email = 'user not already registered';
+			return res.status(404).json({ ...errors });
 		}
 
 		bcrypt.compare(password, user.password).then((isMatch) => {
@@ -90,7 +99,8 @@ router.post('/login', (req, res) => {
 						.json({ success: true, token: `Bearer ${token}` });
 				});
 			} else {
-				return res.status(400).json({ password: 'password is incorrect' });
+				errors.password = 'incorrect password. please check and try again.';
+				return res.status(400).json({ ...errors });
 			}
 		});
 	});
