@@ -4,18 +4,26 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const privateKey = require('../../config/keys').privateKey;
-
-const router = express.Router();
-
+const validateRegisterInput = require('../../validation/register');
 // load user model
 const User = require('../../models/User');
 
+const router = express.Router();
+
 router.post('/register', (req, res) => {
+	const { errors, isValid } = validateRegisterInput(req.body);
+
+	// validate register payload
+	if (!isValid) {
+		return res.status(400).json({ ...errors });
+	}
+
 	const { name, email, password } = req.body;
 
 	User.findOne({ email }).then((user) => {
 		if (user) {
-			return res.status(400).json({ email: 'Email already taken' });
+			errors.email = 'Email already taken';
+			return res.status(400).json({ ...errors });
 		} else {
 			const avatar = gravatar.url(email, {
 				s: '200', // size
@@ -33,7 +41,7 @@ router.post('/register', (req, res) => {
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
 					if (err) {
-						res
+						return res
 							.status(500)
 							.json({ message: 'cannot perform password hashing' });
 					}
@@ -42,7 +50,7 @@ router.post('/register', (req, res) => {
 					newUser
 						.save()
 						.then((user) => {
-							res.status(201).json(user);
+							return res.status(201).json(user);
 						})
 						.catch((err) => {
 							console.error(err);
@@ -72,13 +80,17 @@ router.post('/login', (req, res) => {
 
 				jwt.sign(payload, privateKey, { expiresIn: 3600 }, (err, token) => {
 					if (err) {
-						res.status(500).json({ message: 'token cannot be generated' });
+						return res
+							.status(500)
+							.json({ message: 'token cannot be generated' });
 					}
 
-					res.status(200).json({ success: true, token: `Bearer ${token}` });
+					return res
+						.status(200)
+						.json({ success: true, token: `Bearer ${token}` });
 				});
 			} else {
-				res.status(400).json({ password: 'password is incorrect' });
+				return res.status(400).json({ password: 'password is incorrect' });
 			}
 		});
 	});
@@ -90,7 +102,7 @@ router.get(
 	(req, res) => {
 		const { id, name, email } = req.user;
 
-		res.status(200).json({
+		return res.status(200).json({
 			id,
 			name,
 			email
