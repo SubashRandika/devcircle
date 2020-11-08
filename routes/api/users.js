@@ -29,7 +29,9 @@ router.post('/register', (req, res) => {
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
 					if (err) {
-						res.status(500).json({ password: 'cannot perform hashing' });
+						res
+							.status(500)
+							.json({ password: 'cannot perform password hashing' });
 					}
 
 					newUser.password = hash;
@@ -44,6 +46,24 @@ router.post('/register', (req, res) => {
 				});
 			});
 		}
+	});
+});
+
+router.post('/login', (req, res) => {
+	const { email, password } = req.body;
+
+	User.findOne({ email }).then((user) => {
+		if (!user) {
+			return res.status(404).json({ email: 'user cannot be found' });
+		}
+
+		bcrypt.compare(password, user.password).then((isMatch) => {
+			if (isMatch) {
+				res.status(200).json({ message: 'Success' });
+			} else {
+				res.status(400).json({ password: 'password is incorrect' });
+			}
+		});
 	});
 });
 
