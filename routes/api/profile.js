@@ -7,6 +7,8 @@ const router = express.Router();
 
 // load profile model
 const Profile = require('../../models/Profile');
+// load user model
+const User = require('../../models/User');
 
 router.get(
 	'/',
@@ -320,6 +322,26 @@ router.delete(
 				.then((profile) => res.status(200).json(profile))
 				.catch((err) => res.status(404).json(err));
 		});
+	}
+);
+
+// delete user and profiles
+router.delete(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		Profile.findOneAndRemove({ user: req.user.id })
+			.then(() => {
+				User.findByIdAndRemove({ _id: req.user.id })
+					.then(() =>
+						res.status(200).json({
+							success: true,
+							message: 'User and his profile success deleted'
+						})
+					)
+					.catch(() => res.status(500).json(err));
+			})
+			.catch((err) => res.status(500).json(err));
 	}
 );
 
