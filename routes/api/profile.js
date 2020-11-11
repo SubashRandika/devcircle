@@ -277,4 +277,50 @@ router.post(
 	}
 );
 
+// delete experience from profile.
+router.delete(
+	'/experience/:exp_id',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		Profile.findOne({ user: req.user.id }).then((profile) => {
+			// find experience element index to remove which matches with exp_id
+			const indexToRemove = profile.experience.findIndex(
+				(item) => item.id === req.params.exp_id
+			);
+
+			// remove from experience array
+			profile.experience.splice(indexToRemove, 1);
+
+			// save back again
+			profile
+				.save()
+				.then((profile) => res.status(200).json(profile))
+				.catch((err) => res.status(404).json(err));
+		});
+	}
+);
+
+// delete education from profile.
+router.delete(
+	'/education/:edu_id',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		Profile.findOne({ user: req.user.id }).then((profile) => {
+			// find education element index to remove which matches with edu_id
+			const indexToRemove = profile.education.findIndex(
+				(item) => item.id === req.params.edu_id
+			);
+
+			// remove from education array
+			profile.education.splice(indexToRemove, 1);
+
+			// save back again
+			profile
+				.save()
+				.then((profile) => res.status(200).json(profile))
+				.catch((err) => res.status(404).json(err));
+		});
+	}
+);
+
 module.exports = router;
