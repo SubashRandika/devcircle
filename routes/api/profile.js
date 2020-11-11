@@ -1,6 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 const router = express.Router();
 
 // load profile model
@@ -203,6 +205,74 @@ router.post(
 						});
 				});
 			}
+		});
+	}
+);
+
+// add experience to profile
+router.post(
+	'/experience',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		const { errors, isValid } = validateExperienceInput(req.body);
+
+		// validate profile experience payload
+		if (!isValid) {
+			return res.status(400).json({ ...errors });
+		}
+
+		Profile.findOne({ user: req.user.id }).then((profile) => {
+			const newExperience = {
+				title: req.body.title,
+				company: req.body.company,
+				location: req.body.location,
+				from: req.body.from,
+				to: req.body.to,
+				isCurrent: req.body.isCurrent,
+				description: req.body.description
+			};
+
+			// added latest experience to beginning of the array
+			profile.experience.unshift(newExperience);
+
+			profile
+				.save()
+				.then((profile) => res.status(201).json(profile))
+				.catch((err) => res.status(500).json(err));
+		});
+	}
+);
+
+// add education to profile
+router.post(
+	'/education',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		const { errors, isValid } = validateEducationInput(req.body);
+
+		// validate profile education payload
+		if (!isValid) {
+			return res.status(400).json({ ...errors });
+		}
+
+		Profile.findOne({ user: req.user.id }).then((profile) => {
+			const newEducation = {
+				school: req.body.school,
+				degree: req.body.degree,
+				fieldofstudy: req.body.fieldofstudy,
+				from: req.body.from,
+				to: req.body.to,
+				isCurrent: req.body.isCurrent,
+				description: req.body.description
+			};
+
+			// added latest education to beginning of the array
+			profile.education.unshift(newEducation);
+
+			profile
+				.save()
+				.then((profile) => res.status(201).json(profile))
+				.catch((err) => res.status(500).json(err));
 		});
 	}
 );
