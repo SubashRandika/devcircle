@@ -183,8 +183,8 @@ router.post(
 					})
 					.catch((err) => {
 						return res
-							.status(500)
-							.json({ message: 'Failed. Unable to update the profile.' });
+							.status(400)
+							.json({ profile: 'Failed. Unable to update the profile.' });
 					});
 			} else {
 				// checks user handle already taken
@@ -201,8 +201,8 @@ router.post(
 							return res.status(201).json(profile);
 						})
 						.catch((err) => {
-							return res.status(500).json({
-								message: 'Failed. Unable create your profile.'
+							return res.status(400).json({
+								profile: 'Failed. Unable create your profile.'
 							});
 						});
 				});
@@ -240,7 +240,7 @@ router.post(
 			profile
 				.save()
 				.then((profile) => res.status(201).json(profile))
-				.catch((err) => res.status(500).json(err));
+				.catch((err) => res.status(400).json(err));
 		});
 	}
 );
@@ -274,7 +274,7 @@ router.post(
 			profile
 				.save()
 				.then((profile) => res.status(201).json(profile))
-				.catch((err) => res.status(500).json(err));
+				.catch((err) => res.status(400).json(err));
 		});
 	}
 );
@@ -339,9 +339,9 @@ router.delete(
 							message: 'User and his profile success deleted'
 						})
 					)
-					.catch(() => res.status(500).json(err));
+					.catch(() => res.status(400).json(err));
 			})
-			.catch((err) => res.status(500).json(err));
+			.catch((err) => res.status(400).json(err));
 	}
 );
 

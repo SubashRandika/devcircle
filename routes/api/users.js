@@ -43,8 +43,8 @@ router.post('/register', (req, res) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
 					if (err) {
 						return res
-							.status(500)
-							.json({ message: 'cannot perform password hashing' });
+							.status(400)
+							.json({ password: 'cannot perform password hashing' });
 					}
 
 					newUser.password = hash;
@@ -89,9 +89,7 @@ router.post('/login', (req, res) => {
 
 				jwt.sign(payload, privateKey, { expiresIn: 3600 }, (err, token) => {
 					if (err) {
-						return res
-							.status(500)
-							.json({ message: 'token cannot be generated' });
+						return res.status(400).json({ token: 'token cannot be generated' });
 					}
 
 					return res
