@@ -7,6 +7,23 @@ const validatePostInput = require('../../validation/post');
 // get post model from
 const Post = require('../../models/Post');
 
+// get all posts
+router.get('/', (req, res) => {
+	Post.find()
+		.sort({ date: -1 })
+		.then((posts) => res.status(200).json(posts))
+		.catch((err) => res.status(404).json({ posts: 'Cannot fetch posts' }));
+});
+
+// get one post by id
+router.get('/:id', (req, res) => {
+	Post.findById(req.params.id)
+		.then((post) => res.status(200).json(post))
+		.catch((err) =>
+			res.status(404).json({ post: 'No post exists with that id' })
+		);
+});
+
 // create a post
 router.post(
 	'/',
