@@ -177,4 +177,82 @@ router.post(
 	}
 );
 
+// add a comment to post
+router.post(
+	'/:id/comment',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		const { errors, isValid } = validatePostInput(req.body);
+
+		// validate post payload
+		if (!isValid) {
+			return res.status(400).json({ ...errors });
+		}
+
+		Post.findById(req.params.id)
+			.then((post) => {
+				const newComment = {
+					text: req.body.text,
+					name: req.body.name,
+					avatar: req.body.avatar,
+					user: req.user.id
+				};
+
+				// add to comment to comments list
+				post.comments.unshift(newComment);
+
+				// save comments
+				post
+					.save()
+					.then((post) => res.status(201).json(post))
+					.catch((err) =>
+						res.status(400).json({ comment: 'Unable to comment on this post' })
+					);
+			})
+			.catch((err) =>
+				res.status(404).json({ post: 'No post found with this id' })
+			);
+	}
+);
+
+// delete a comment to post
+router.delete(
+	'/:id/comment/:comment_id',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		Post.findById(req.params.id)
+			.then((post) => {
+				// check whether comment is exists
+				if (
+					!post.comments.some(
+						(comment) => comment._id.toString() === req.params.comment_id
+					)
+				) {
+					return res.status(404).json({ comment: 'Comment does not exist' });
+				}
+
+				// get index to remove the comment
+				const removeIndex = post.comments.findIndex(
+					(comment) => comment._id.toString() === req.params.comment_id
+				);
+
+				// remove comment from comment list
+				post.comments.splice(removeIndex, 1);
+
+				// save latest comments back to database
+				post
+					.save()
+					.then((post) => res.status(201).json(post))
+					.catch((err) =>
+						res
+							.status(400)
+							.json({ comment: 'Unable to delete the comment on this post' })
+					);
+			})
+			.catch((err) =>
+				res.status(404).json({ post: 'No post found with this id' })
+			);
+	}
+);
+
 module.exports = router;
