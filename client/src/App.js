@@ -1,10 +1,13 @@
+import React from 'react';
+import { Container } from '@chakra-ui/react';
+import Home from './pages/Home';
 import './App.css';
 
 function App() {
 	return (
-		<div className='App'>
-			<h1>Dev Circle App</h1>
-		</div>
+		<Container className='main_app' maxW='1650px'>
+			<Home />
+		</Container>
 	);
 }
 

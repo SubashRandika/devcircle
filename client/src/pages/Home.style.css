@@ -1,0 +1,54 @@
+svg.home__blue-blob {
+	position: fixed;
+	top: -35px;
+	right: -520px;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+svg.home__footer-blob {
+	position: fixed;
+	top: 250px;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+svg.home__computer-man {
+	position: fixed;
+	top: 354px;
+	right: 407px;
+	z-index: -1;
+}
+
+svg.home__profile-card {
+	position: fixed;
+	top: 230px;
+	right: 355px;
+	z-index: -1;
+}
+
+svg.home__posting-woman {
+	position: fixed;
+	top: 475px;
+	right: 95px;
+	z-index: -1;
+}
+
+span.logo__text {
+	font-family: Nunito;
+	font-style: normal;
+	font-weight: 800;
+	font-size: 55px;
+	line-height: 55px;
+}
+
+span.logo__text.first-part {
+	color: #414f7a;
+}
+
+span.logo__text.last-part {
+	color: #f17872;
+}
