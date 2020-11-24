@@ -10,12 +10,36 @@ import {
 	Stack,
 	Heading
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as BlueBlob } from '../assets/blue_blog.svg';
 import { ReactComponent as FooterBlob } from '../assets/footer_blog.svg';
 import { ReactComponent as ComputerMan } from '../assets/computer_man.svg';
 import { ReactComponent as ProfileCard } from '../assets/profile_card.svg';
 import { ReactComponent as PostingWoman } from '../assets/posting_woman.svg';
 import './Home.style.css';
+
+const color = {
+	primaryColor: '#414f7a',
+	secondaryColor: '#f17872',
+	white: '#ffffff',
+	bluishGrey: '#949ABB'
+};
+
+const logoText = {
+	fontWeight: '800',
+	fontSize: '55px',
+	lineHeight: '55px'
+};
+
+const buttonStyles = {
+	size: 'xl',
+	height: '50px',
+	width: '150px',
+	border: '2px',
+	borderRadius: '50px',
+	color: color.white,
+	lineHeight: 'unset'
+};
 
 function Home() {
 	return (
@@ -24,8 +48,12 @@ function Home() {
 				<Center h='135px'>
 					<Box>
 						<Text>
-							<span className='logo__text first-part'>Dev</span>
-							<span className='logo__text last-part'>Circle</span>
+							<Text as='span' color={color.primaryColor} {...logoText}>
+								Dev
+							</Text>
+							<Text as='span' color={color.secondaryColor} {...logoText}>
+								Circle
+							</Text>
 						</Text>
 					</Box>
 				</Center>
@@ -33,52 +61,42 @@ function Home() {
 				<center>
 					<Box>
 						<ButtonGroup variant='outline' spacing='6'>
-							<Button
-								size='xl'
-								height='50px'
-								width='150px'
-								border='2px'
-								borderRadius='50px'
-								borderColor='#949ABB'
-								color='#ffffff'
-								_hover={{ bg: '#949ABB' }}
-							>
-								Sign In
-							</Button>
-							<Button
-								size='xl'
-								height='50px'
-								width='150px'
-								border='2px'
-								borderRadius='50px'
-								borderColor='#f17872'
-								color='#ffffff'
-								_hover={{ bg: '#f17872' }}
-							>
-								Sign Up
-							</Button>
+							<Link to='/signin'>
+								<Button
+									{...buttonStyles}
+									borderColor={color.bluishGrey}
+									_hover={{ bg: color.bluishGrey }}
+									_active={{ bg: color.bluishGrey }}
+								>
+									Sign In
+								</Button>
+							</Link>
+							<Link to='/signup'>
+								<Button
+									{...buttonStyles}
+									borderColor={color.secondaryColor}
+									_hover={{ bg: color.secondaryColor }}
+									_active={{ bg: color.secondaryColor }}
+								>
+									Sign Up
+								</Button>
+							</Link>
 						</ButtonGroup>
 					</Box>
 				</center>
 			</Flex>
 			<Stack spacing={8} maxW='600px'>
 				<Box>
-					<Heading fontFamily='Nunito' fontSize='4xl' mt='70px' ml='80px'>
+					<Heading fontSize='4xl' mt='70px' ml='80px'>
 						Are you a developer?
 					</Heading>
-					<Text
-						fontFamily='Nunito'
-						fontSize='xl'
-						mt='30px'
-						ml='80px'
-						maxW='500px'
-					>
+					<Text fontSize='xl' mt='30px' ml='80px' maxW='500px'>
 						Build up your developer portfolio today.
 					</Text>
-					<Text fontFamily='Nunito' fontSize='xl' ml='80px' maxW='500px'>
+					<Text fontSize='xl' ml='80px' maxW='500px'>
 						Connect with career mates all around the world.
 					</Text>
-					<Text fontFamily='Nunito' fontSize='xl' ml='80px' maxW='500px'>
+					<Text fontSize='xl' ml='80px' maxW='500px'>
 						Share your tech thoughts and questions with other developers.
 					</Text>
 					<Button
@@ -86,9 +104,10 @@ function Home() {
 						borderRadius='50px'
 						ml='80px'
 						mt='50px'
-						color='#ffffff'
-						bgColor='#f17872'
-						_hover={{ bg: '#414F7A' }}
+						color={color.white}
+						bgColor={color.secondaryColor}
+						_hover={{ bg: color.primaryColor }}
+						_active={{ bg: color.primaryColor }}
 					>
 						Checkout Developers
 					</Button>

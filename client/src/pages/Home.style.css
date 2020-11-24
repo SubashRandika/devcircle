@@ -38,17 +38,7 @@ svg.home__posting-woman {
 }
 
 span.logo__text {
-	font-family: Nunito;
-	font-style: normal;
 	font-weight: 800;
 	font-size: 55px;
 	line-height: 55px;
-}
-
-span.logo__text.first-part {
-	color: #414f7a;
-}
-
-span.logo__text.last-part {
-	color: #f17872;
 }
