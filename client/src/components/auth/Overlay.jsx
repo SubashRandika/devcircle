@@ -48,7 +48,7 @@ function Overlay({ isRightPanelActive, handleClick }) {
 						letterSpacing='0.5px'
 						m='20px 0 30px'
 					>
-						To keep connected with other developers please login with your
+						To keep connected with other developers please signin with your
 						credentials
 					</Text>
 					<Link to='/signin'>
@@ -65,7 +65,7 @@ function Overlay({ isRightPanelActive, handleClick }) {
 							textTransform='uppercase'
 							transition='transform 80ms ease-in'
 							_hover={{ bg: '#414F7A' }}
-							onClick={() => handleClick(false)}
+							onClick={() => handleClick()}
 							_active={{ bg: '#414F7A' }}
 						>
 							Sign In
@@ -96,7 +96,7 @@ function Overlay({ isRightPanelActive, handleClick }) {
 						letterSpacing='0.5px'
 						m='20px 0 30px'
 					>
-						Create your portfolio and make connections with career mates
+						Create your portfolio and make connections with career mates today
 					</Text>
 					<Link to='/signup'>
 						<Button
@@ -112,7 +112,7 @@ function Overlay({ isRightPanelActive, handleClick }) {
 							textTransform='uppercase'
 							transition='transform 80ms ease-in'
 							_hover={{ bg: '#f06a63' }}
-							onClick={() => handleClick(true)}
+							onClick={() => handleClick()}
 							_active={{ bg: '#f06a63' }}
 						>
 							Sign Up

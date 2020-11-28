@@ -5,7 +5,6 @@ import {
 	Spacer,
 	Center,
 	Text,
-	ButtonGroup,
 	Button,
 	Stack,
 	Heading
@@ -32,13 +31,11 @@ const logoText = {
 };
 
 const buttonStyles = {
-	size: 'xl',
-	height: '50px',
-	width: '150px',
+	size: 'lg',
 	border: '2px',
 	borderRadius: '50px',
 	color: color.white,
-	lineHeight: 'unset'
+	bgColor: 'transparent'
 };
 
 function Home() {
@@ -60,57 +57,45 @@ function Home() {
 				<Spacer />
 				<center>
 					<Box>
-						<ButtonGroup variant='outline' spacing='6'>
-							<Link to='/signin'>
-								<Button
-									{...buttonStyles}
-									borderColor={color.bluishGrey}
-									_hover={{ bg: color.bluishGrey }}
-									_active={{ bg: color.bluishGrey }}
-								>
-									Sign In
-								</Button>
-							</Link>
-							<Link to='/signup'>
-								<Button
-									{...buttonStyles}
-									borderColor={color.secondaryColor}
-									_hover={{ bg: color.secondaryColor }}
-									_active={{ bg: color.secondaryColor }}
-								>
-									Sign Up
-								</Button>
-							</Link>
-						</ButtonGroup>
+						<Button
+							{...buttonStyles}
+							borderColor={color.secondaryColor}
+							_hover={{ bg: color.secondaryColor }}
+							_active={{ bg: color.secondaryColor }}
+						>
+							Checkout Developers
+						</Button>
 					</Box>
 				</center>
 			</Flex>
-			<Stack spacing={8} maxW='600px'>
+			<Stack spacing={8} maxW='700px'>
 				<Box>
 					<Heading fontSize='4xl' mt='70px' ml='80px'>
 						Are you a developer?
 					</Heading>
-					<Text fontSize='xl' mt='30px' ml='80px' maxW='500px'>
+					<Text fontSize='xl' mt='30px' ml='80px' maxW='600px'>
 						Build up your developer portfolio today.
 					</Text>
-					<Text fontSize='xl' ml='80px' maxW='500px'>
-						Connect with career mates all around the world.
+					<Text fontSize='xl' ml='80px' maxW='600px'>
+						Get connected with talented developers all around the world.
 					</Text>
-					<Text fontSize='xl' ml='80px' maxW='500px'>
-						Share your tech thoughts and questions with other developers.
+					<Text fontSize='xl' ml='80px' maxW='600px'>
+						Share your technical knowledge and thoughts with others.
 					</Text>
-					<Button
-						size='lg'
-						borderRadius='50px'
-						ml='80px'
-						mt='50px'
-						color={color.white}
-						bgColor={color.secondaryColor}
-						_hover={{ bg: color.primaryColor }}
-						_active={{ bg: color.primaryColor }}
-					>
-						Checkout Developers
-					</Button>
+					<Link to='/signin'>
+						<Button
+							size='lg'
+							borderRadius='50px'
+							ml='80px'
+							mt='50px'
+							color={color.white}
+							bgColor={color.secondaryColor}
+							_hover={{ bg: color.primaryColor }}
+							_active={{ bg: color.primaryColor }}
+						>
+							Get Started Here
+						</Button>
+					</Link>
 				</Box>
 			</Stack>
 			<BlueBlob className='home__blue-blob' />

@@ -12,6 +12,12 @@ import {
 } from '@chakra-ui/react';
 import SocialMedia from './SocialMedia';
 
+const color = {
+	primaryColor: '#414f7a',
+	white: '#ffffff',
+	linkColor: '#008cdd'
+};
+
 function SignIn({ isRightPanelActive }) {
 	return (
 		<Box
@@ -20,13 +26,15 @@ function SignIn({ isRightPanelActive }) {
 			left='0'
 			w='50%'
 			h='100%'
-			zIndex='2'
+			opacity={isRightPanelActive ? '0' : '1'}
+			zIndex={isRightPanelActive ? '-1' : '5'}
 			transition='all 0.6s ease-in-out'
 			transform={isRightPanelActive ? 'translateX(100%)' : ''}
 		>
 			<FormControl
+				as='form'
 				d='flex'
-				bgColor='#ffffff'
+				bgColor={color.white}
 				p='0 50px'
 				h='100%'
 				textAlign='center'
@@ -47,15 +55,15 @@ function SignIn({ isRightPanelActive }) {
 						href='#'
 						fontSize='16px'
 						mb='20px'
-						_hover={{ textDecoration: 'none', color: '#008cdd' }}
+						_hover={{ textDecoration: 'none', color: `${color.linkColor}` }}
 					>
 						Forgot your password?
 					</ForgotPassword>
 					<Button
 						borderRadius='20px'
-						border='2px solid #414F7A'
-						bgColor='#414F7A'
-						color='#ffffff'
+						border={`2px solid ${color.primaryColor}`}
+						bgColor={color.primaryColor}
+						color={color.white}
 						fontSize='14px'
 						fontWeight='bold'
 						p='12px 45px'
@@ -63,7 +71,7 @@ function SignIn({ isRightPanelActive }) {
 						lineHeight='unset'
 						textTransform='uppercase'
 						transition='transform 80ms ease-in'
-						_hover={{ bg: 'transparent', color: '#414F7A' }}
+						_hover={{ bg: 'transparent', color: `${color.primaryColor}` }}
 						_active={{ bg: 'transparent' }}
 					>
 						Sign In

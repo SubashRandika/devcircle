@@ -12,10 +12,10 @@ function App() {
 					<Route exact path='/'>
 						<Home />
 					</Route>
-					<Route path='/signin'>
+					<Route exact path='/signin'>
 						<Authentication signup={false} />
 					</Route>
-					<Route path='/signup'>
+					<Route exact path='/signup'>
 						<Authentication signup={true} />
 					</Route>
 				</Switch>
