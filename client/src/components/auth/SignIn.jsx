@@ -75,6 +75,7 @@ function SignIn({ isRightPanelActive }) {
 					</Text>
 					<Stack spacing={3} w='100%' mb='10px'>
 						<Input
+							size='sm'
 							type='email'
 							name='email'
 							value={signIn.email}
@@ -83,6 +84,7 @@ function SignIn({ isRightPanelActive }) {
 						/>
 						<InputGroup>
 							<Input
+								size='sm'
 								type={showPassword ? 'text' : 'password'}
 								name='password'
 								value={signIn.password}
@@ -92,6 +94,8 @@ function SignIn({ isRightPanelActive }) {
 							<InputRightElement
 								pl='0'
 								pr='0'
+								w='2rem'
+								h='2rem'
 								cursor='pointer'
 								onClick={handleShowPassword}
 								children={showPassword ? <FaEye /> : <FaEyeSlash />}

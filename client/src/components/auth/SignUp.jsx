@@ -22,6 +22,14 @@ const color = {
 	white: '#ffffff'
 };
 
+const inputRightStyles = {
+	pl: '0',
+	pr: '0',
+	w: '2rem',
+	h: '2rem',
+	cursor: 'pointer'
+};
+
 const show = keyframes`
 	0%, 49.99% {
 		opacity: 0;
@@ -97,6 +105,7 @@ function SignUp({ isRightPanelActive }) {
 					</Text>
 					<Stack spacing={3} w='100%' mb='10px'>
 						<Input
+							size='sm'
 							type='text'
 							name='name'
 							value={signUp.name}
@@ -111,6 +120,7 @@ function SignUp({ isRightPanelActive }) {
 								aria-label='Email info tooltip'
 							>
 								<Input
+									size='sm'
 									type='email'
 									name='email'
 									value={signUp.email}
@@ -121,6 +131,7 @@ function SignUp({ isRightPanelActive }) {
 						</InputGroup>
 						<InputGroup>
 							<Input
+								size='sm'
 								type={showPassword ? 'text' : 'password'}
 								name='password'
 								value={signUp.password}
@@ -128,15 +139,14 @@ function SignUp({ isRightPanelActive }) {
 								onChange={handleOnChange}
 							/>
 							<InputRightElement
-								pl='0'
-								pr='0'
-								cursor='pointer'
+								{...inputRightStyles}
 								onClick={handleShowPassword}
 								children={showPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
 						<InputGroup>
 							<Input
+								size='sm'
 								type={showConfirmPassword ? 'text' : 'password'}
 								name='confirmPassword'
 								value={signUp.confirmPassword}
@@ -144,9 +154,7 @@ function SignUp({ isRightPanelActive }) {
 								onChange={handleOnChange}
 							/>
 							<InputRightElement
-								pl='0'
-								pr='0'
-								cursor='pointer'
+								{...inputRightStyles}
 								onClick={handleShowConfirmPassword}
 								children={showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
