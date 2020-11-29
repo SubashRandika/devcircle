@@ -49,9 +49,9 @@ function Authentication({ signup }) {
 				<Box
 					pos='relative'
 					overflow='hidden'
-					w='850px'
+					w='900px'
 					maxW='100%'
-					minH='550px'
+					minH='600px'
 					bgColor={color.white}
 					borderRadius='10px'
 					border={`1px solid ${color.borderColor}`}

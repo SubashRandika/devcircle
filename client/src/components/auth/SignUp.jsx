@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
 	Box,
 	FormControl,
+	FormErrorMessage,
 	Flex,
 	Heading,
 	Text,
@@ -15,6 +16,7 @@ import {
 	usePrefersReducedMotion
 } from '@chakra-ui/react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
+import axios from 'axios';
 import SocialMedia from './SocialMedia';
 
 const color = {
@@ -51,6 +53,7 @@ function SignUp({ isRightPanelActive }) {
 		password: '',
 		confirmPassword: ''
 	});
+	const [errors, setErrors] = useState({});
 	const prefersReducedMotion = usePrefersReducedMotion();
 	const animation = prefersReducedMotion ? undefined : `${show} 0.6s`;
 
@@ -70,7 +73,14 @@ function SignUp({ isRightPanelActive }) {
 			...signUp
 		};
 
-		console.log(newUser);
+		axios
+			.post('/api/users/register', newUser)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				setErrors(err.response.data);
+			});
 	};
 
 	return (
@@ -87,6 +97,7 @@ function SignUp({ isRightPanelActive }) {
 			transition='all 0.6s ease-in-out'
 		>
 			<FormControl
+				noValidate
 				as='form'
 				d='flex'
 				bgColor={color.white}
@@ -94,6 +105,7 @@ function SignUp({ isRightPanelActive }) {
 				h='100%'
 				textAlign='center'
 				onSubmit={handleOnSubmit}
+				isInvalid={Object.keys(errors).length !== 0}
 			>
 				<Flex align='center' justify='center' direction='column'>
 					<Heading as='h1' fontWeight='bold' m='0'>
@@ -103,7 +115,7 @@ function SignUp({ isRightPanelActive }) {
 					<Text as='span' fontSize='md' mb='10px'>
 						or use your email for registration
 					</Text>
-					<Stack spacing={3} w='100%' mb='10px'>
+					<Stack spacing={3} w='100%' mb='20px'>
 						<Input
 							size='sm'
 							type='text'
@@ -111,7 +123,15 @@ function SignUp({ isRightPanelActive }) {
 							value={signUp.name}
 							placeholder='Name'
 							onChange={handleOnChange}
+							errorBorderColor='red.400'
 						/>
+						<FormErrorMessage
+							fontSize='0.75rem'
+							mt='0.1rem !important'
+							mb='0 !important'
+						>
+							{errors.name}
+						</FormErrorMessage>
 						<InputGroup>
 							<Tooltip
 								hasArrow
@@ -126,9 +146,17 @@ function SignUp({ isRightPanelActive }) {
 									value={signUp.email}
 									placeholder='Email'
 									onChange={handleOnChange}
+									errorBorderColor='red.400'
 								/>
 							</Tooltip>
 						</InputGroup>
+						<FormErrorMessage
+							fontSize='0.75rem'
+							mt='0.1rem !important'
+							mb='0 !important'
+						>
+							{errors.email}
+						</FormErrorMessage>
 						<InputGroup>
 							<Input
 								size='sm'
@@ -137,6 +165,7 @@ function SignUp({ isRightPanelActive }) {
 								value={signUp.password}
 								placeholder='Password'
 								onChange={handleOnChange}
+								errorBorderColor='red.400'
 							/>
 							<InputRightElement
 								{...inputRightStyles}
@@ -144,6 +173,13 @@ function SignUp({ isRightPanelActive }) {
 								children={showPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
+						<FormErrorMessage
+							fontSize='0.75rem'
+							mt='0.1rem !important'
+							mb='0 !important'
+						>
+							{errors.password}
+						</FormErrorMessage>
 						<InputGroup>
 							<Input
 								size='sm'
@@ -152,6 +188,7 @@ function SignUp({ isRightPanelActive }) {
 								value={signUp.confirmPassword}
 								placeholder='Confirm Password'
 								onChange={handleOnChange}
+								errorBorderColor='red.400'
 							/>
 							<InputRightElement
 								{...inputRightStyles}
@@ -159,6 +196,13 @@ function SignUp({ isRightPanelActive }) {
 								children={showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
+						<FormErrorMessage
+							fontSize='0.75rem'
+							mt='0.1rem !important'
+							mb='0 !important'
+						>
+							{errors.confirmPassword}
+						</FormErrorMessage>
 					</Stack>
 					<Button
 						type='submit'
