@@ -16,7 +16,9 @@ import {
 	usePrefersReducedMotion
 } from '@chakra-ui/react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import { registerUser } from '../../redux/actions/authActions';
 import SocialMedia from './SocialMedia';
 
 const color = {
@@ -44,7 +46,7 @@ const show = keyframes`
 	}
 `;
 
-function SignUp({ isRightPanelActive }) {
+function SignUp({ isRightPanelActive, registerUser }) {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [signUp, setSignUp] = useState({
@@ -73,14 +75,16 @@ function SignUp({ isRightPanelActive }) {
 			...signUp
 		};
 
-		axios
-			.post('/api/users/register', newUser)
-			.then((res) => {
-				console.log(res.data);
-			})
-			.catch((err) => {
-				setErrors(err.response.data);
-			});
+		registerUser(newUser);
+
+		// axios
+		// 	.post('/api/users/register', newUser)
+		// 	.then((res) => {
+		// 		console.log(res.data);
+		// 	})
+		// 	.catch((err) => {
+		// 		setErrors(err.response.data);
+		// 	});
 	};
 
 	return (
@@ -228,4 +232,6 @@ function SignUp({ isRightPanelActive }) {
 	);
 }
 
-export default SignUp;
+const mapDispatchToProps = { registerUser };
+
+export default connect(null, mapDispatchToProps)(SignUp);
