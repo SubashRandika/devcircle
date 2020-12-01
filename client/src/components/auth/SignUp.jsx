@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
 	Box,
 	FormControl,
@@ -17,7 +19,6 @@ import {
 } from '@chakra-ui/react';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { registerUser } from '../../redux/actions/authActions';
 import SocialMedia from './SocialMedia';
 
@@ -46,7 +47,9 @@ const show = keyframes`
 	}
 `;
 
-function SignUp({ isRightPanelActive, registerUser }) {
+function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
+	const { name, email, password, confirmPassword } = errors;
+	let history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [signUp, setSignUp] = useState({
@@ -55,7 +58,7 @@ function SignUp({ isRightPanelActive, registerUser }) {
 		password: '',
 		confirmPassword: ''
 	});
-	const [errors, setErrors] = useState({});
+
 	const prefersReducedMotion = usePrefersReducedMotion();
 	const animation = prefersReducedMotion ? undefined : `${show} 0.6s`;
 
@@ -75,16 +78,7 @@ function SignUp({ isRightPanelActive, registerUser }) {
 			...signUp
 		};
 
-		registerUser(newUser);
-
-		// axios
-		// 	.post('/api/users/register', newUser)
-		// 	.then((res) => {
-		// 		console.log(res.data);
-		// 	})
-		// 	.catch((err) => {
-		// 		setErrors(err.response.data);
-		// 	});
+		registerUser(newUser, history);
 	};
 
 	return (
@@ -127,14 +121,15 @@ function SignUp({ isRightPanelActive, registerUser }) {
 							value={signUp.name}
 							placeholder='Name'
 							onChange={handleOnChange}
-							errorBorderColor='red.400'
+							errorBorderColor={name ? 'red.400' : 'none'}
 						/>
 						<FormErrorMessage
 							fontSize='0.75rem'
 							mt='0.1rem !important'
 							mb='0 !important'
+							textAlign='left'
 						>
-							{errors.name}
+							{name}
 						</FormErrorMessage>
 						<InputGroup>
 							<Tooltip
@@ -150,7 +145,7 @@ function SignUp({ isRightPanelActive, registerUser }) {
 									value={signUp.email}
 									placeholder='Email'
 									onChange={handleOnChange}
-									errorBorderColor='red.400'
+									errorBorderColor={email ? 'red.400' : 'none'}
 								/>
 							</Tooltip>
 						</InputGroup>
@@ -158,8 +153,9 @@ function SignUp({ isRightPanelActive, registerUser }) {
 							fontSize='0.75rem'
 							mt='0.1rem !important'
 							mb='0 !important'
+							textAlign='left'
 						>
-							{errors.email}
+							{email}
 						</FormErrorMessage>
 						<InputGroup>
 							<Input
@@ -169,7 +165,7 @@ function SignUp({ isRightPanelActive, registerUser }) {
 								value={signUp.password}
 								placeholder='Password'
 								onChange={handleOnChange}
-								errorBorderColor='red.400'
+								errorBorderColor={password ? 'red.400' : 'none'}
 							/>
 							<InputRightElement
 								{...inputRightStyles}
@@ -181,8 +177,9 @@ function SignUp({ isRightPanelActive, registerUser }) {
 							fontSize='0.75rem'
 							mt='0.1rem !important'
 							mb='0 !important'
+							textAlign='left'
 						>
-							{errors.password}
+							{password}
 						</FormErrorMessage>
 						<InputGroup>
 							<Input
@@ -192,7 +189,7 @@ function SignUp({ isRightPanelActive, registerUser }) {
 								value={signUp.confirmPassword}
 								placeholder='Confirm Password'
 								onChange={handleOnChange}
-								errorBorderColor='red.400'
+								errorBorderColor={confirmPassword ? 'red.400' : 'none'}
 							/>
 							<InputRightElement
 								{...inputRightStyles}
@@ -204,8 +201,9 @@ function SignUp({ isRightPanelActive, registerUser }) {
 							fontSize='0.75rem'
 							mt='0.1rem !important'
 							mb='0 !important'
+							textAlign='left'
 						>
-							{errors.confirmPassword}
+							{confirmPassword}
 						</FormErrorMessage>
 					</Stack>
 					<Button
@@ -232,6 +230,18 @@ function SignUp({ isRightPanelActive, registerUser }) {
 	);
 }
 
+SignUp.propTypes = {
+	isRightPanelActive: PropTypes.bool.isRequired,
+	registerUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	errors: state.errors
+});
+
 const mapDispatchToProps = { registerUser };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

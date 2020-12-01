@@ -1,5 +1,3 @@
-import { TEST_DISPATCH } from '../constants/authTypes';
-
 const initialState = {
 	isAuthenticated: false,
 	user: {}
@@ -7,11 +5,6 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case TEST_DISPATCH:
-			return {
-				...state,
-				user: action.payload
-			};
 		default:
 			return state;
 	}
