@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
 	Box,
 	FormControl,
+	FormErrorMessage,
 	Flex,
 	Heading,
 	Text,
@@ -12,7 +15,9 @@ import {
 	Button,
 	Link as ForgotPassword
 } from '@chakra-ui/react';
+import { connect } from 'react-redux';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
+import { loginUser } from '../../redux/actions/authActions';
 import SocialMedia from './SocialMedia';
 
 const color = {
@@ -21,7 +26,16 @@ const color = {
 	linkColor: '#008cdd'
 };
 
-function SignIn({ isRightPanelActive }) {
+const formErrorStyles = {
+	fontSize: '0.75rem',
+	mt: '0.1rem !important',
+	mb: '0 !important',
+	textAlign: 'left'
+};
+
+function SignIn({ isRightPanelActive, loginUser, auth, errors }) {
+	const { email, password } = errors;
+	const history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
 	const [signIn, setSignIn] = useState({
 		email: '',
@@ -41,7 +55,7 @@ function SignIn({ isRightPanelActive }) {
 			...signIn
 		};
 
-		console.log(signInCredentials);
+		loginUser(signInCredentials, history);
 	};
 
 	return (
@@ -57,6 +71,7 @@ function SignIn({ isRightPanelActive }) {
 			transform={isRightPanelActive ? 'translateX(100%)' : ''}
 		>
 			<FormControl
+				noValidate
 				as='form'
 				d='flex'
 				bgColor={color.white}
@@ -64,6 +79,7 @@ function SignIn({ isRightPanelActive }) {
 				h='100%'
 				textAlign='center'
 				onSubmit={handleOnSubmit}
+				isInvalid={Object.keys(errors).length !== 0}
 			>
 				<Flex align='center' justify='center' direction='column'>
 					<Heading as='h1' fontWeight='bold' m='0'>
@@ -81,7 +97,9 @@ function SignIn({ isRightPanelActive }) {
 							value={signIn.email}
 							placeholder='Email'
 							onChange={handleOnChange}
+							errorBorderColor={email ? 'red.400' : 'none'}
 						/>
+						<FormErrorMessage {...formErrorStyles}>{email}</FormErrorMessage>
 						<InputGroup>
 							<Input
 								size='sm'
@@ -90,6 +108,7 @@ function SignIn({ isRightPanelActive }) {
 								value={signIn.password}
 								placeholder='Password'
 								onChange={handleOnChange}
+								errorBorderColor={password ? 'red.400' : 'none'}
 							/>
 							<InputRightElement
 								pl='0'
@@ -101,6 +120,7 @@ function SignIn({ isRightPanelActive }) {
 								children={showPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
+						<FormErrorMessage {...formErrorStyles}>{password}</FormErrorMessage>
 					</Stack>
 					<ForgotPassword
 						href='#'
@@ -134,4 +154,18 @@ function SignIn({ isRightPanelActive }) {
 	);
 }
 
-export default SignIn;
+SignIn.propTypes = {
+	isRightPanelActive: PropTypes.bool.isRequired,
+	loginUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	errors: state.errors
+});
+
+const mapDispatchToProps = { loginUser };
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

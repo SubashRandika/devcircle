@@ -35,6 +35,13 @@ const inputRightStyles = {
 	cursor: 'pointer'
 };
 
+const formErrorStyles = {
+	fontSize: '0.75rem',
+	mt: '0.1rem !important',
+	mb: '0 !important',
+	textAlign: 'left'
+};
+
 const show = keyframes`
 	0%, 49.99% {
 		opacity: 0;
@@ -123,14 +130,7 @@ function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
 							onChange={handleOnChange}
 							errorBorderColor={name ? 'red.400' : 'none'}
 						/>
-						<FormErrorMessage
-							fontSize='0.75rem'
-							mt='0.1rem !important'
-							mb='0 !important'
-							textAlign='left'
-						>
-							{name}
-						</FormErrorMessage>
+						<FormErrorMessage {...formErrorStyles}>{name}</FormErrorMessage>
 						<InputGroup>
 							<Tooltip
 								hasArrow
@@ -149,14 +149,7 @@ function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
 								/>
 							</Tooltip>
 						</InputGroup>
-						<FormErrorMessage
-							fontSize='0.75rem'
-							mt='0.1rem !important'
-							mb='0 !important'
-							textAlign='left'
-						>
-							{email}
-						</FormErrorMessage>
+						<FormErrorMessage {...formErrorStyles}>{email}</FormErrorMessage>
 						<InputGroup>
 							<Input
 								size='sm'
@@ -173,14 +166,7 @@ function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
 								children={showPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
-						<FormErrorMessage
-							fontSize='0.75rem'
-							mt='0.1rem !important'
-							mb='0 !important'
-							textAlign='left'
-						>
-							{password}
-						</FormErrorMessage>
+						<FormErrorMessage {...formErrorStyles}>{password}</FormErrorMessage>
 						<InputGroup>
 							<Input
 								size='sm'
@@ -197,12 +183,7 @@ function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
 								children={showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
 							/>
 						</InputGroup>
-						<FormErrorMessage
-							fontSize='0.75rem'
-							mt='0.1rem !important'
-							mb='0 !important'
-							textAlign='left'
-						>
+						<FormErrorMessage {...formErrorStyles}>
 							{confirmPassword}
 						</FormErrorMessage>
 					</Stack>

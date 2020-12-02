@@ -1,13 +1,14 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
-import { GET_ERRORS, SET_CURRENT_USER } from '../constants/authTypes';
+import { GET_ERRORS, SET_CURRENT_USER } from '../constants/types';
 
 // Register user (SignUp user)
 export const registerUser = (userData, history) => (dispatch) => {
 	axios
 		.post('/api/users/register', userData)
 		.then(() => {
+			// navigate to signin route with page reload
 			history.push('/signin');
 			history.go(0);
 		})
@@ -20,7 +21,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 };
 
 // Login user (SignIn user)
-export const loginUser = (credentials) => (dispatch) => {
+export const loginUser = (credentials, history) => (dispatch) => {
 	axios
 		.post('/api/users/login', credentials)
 		.then((res) => {
@@ -37,6 +38,8 @@ export const loginUser = (credentials) => (dispatch) => {
 
 			// set current login user
 			dispatch(setCurrentUser(decodedUserData));
+			// navigate to dashboard route
+			history.push('/dashboard');
 		})
 		.catch((err) => {
 			dispatch({

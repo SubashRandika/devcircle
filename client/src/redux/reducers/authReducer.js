@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from '../constants/authTypes';
+import { SET_CURRENT_USER } from '../constants/types';
 import isEmpty from '../../utils/isEmpty';
 
 const initialState = {
