@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Landing() {
+function Content() {
 	return (
 		<div>
 			<h1>Landing Section</h1>
@@ -8,4 +8,4 @@ function Landing() {
 	);
 }
 
-export default Landing;
+export default Content;

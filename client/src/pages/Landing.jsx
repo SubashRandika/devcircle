@@ -15,7 +15,8 @@ import { ReactComponent as FooterBlob } from '../assets/footer_blog.svg';
 import { ReactComponent as ComputerMan } from '../assets/computer_man.svg';
 import { ReactComponent as ProfileCard } from '../assets/profile_card.svg';
 import { ReactComponent as PostingWoman } from '../assets/posting_woman.svg';
-import './Home.style.css';
+import './Landing.style.css';
+import Logo from '../components/logo/Logo';
 
 const color = {
 	primaryColor: '#414f7a',
@@ -38,21 +39,12 @@ const buttonStyles = {
 	bgColor: 'transparent'
 };
 
-function Home() {
+function Landing() {
 	return (
 		<>
 			<Flex align='center'>
 				<Center h='135px'>
-					<Box>
-						<Text>
-							<Text as='span' color={color.primaryColor} {...logoText}>
-								Dev
-							</Text>
-							<Text as='span' color={color.secondaryColor} {...logoText}>
-								Circle
-							</Text>
-						</Text>
-					</Box>
+					<Logo {...logoText} />
 				</Center>
 				<Spacer />
 				<center>
@@ -107,4 +99,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default Landing;
