@@ -12,12 +12,12 @@ export const registerUser = (userData, history) => (dispatch) => {
 			history.push('/signin');
 			history.go(0);
 		})
-		.catch((err) => {
+		.catch((err) =>
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data
-			});
-		});
+			})
+		);
 };
 
 // Login user (SignIn user)
@@ -41,20 +41,18 @@ export const loginUser = (credentials, history) => (dispatch) => {
 			// navigate to dashboard route
 			history.push('/dashboard');
 		})
-		.catch((err) => {
+		.catch((err) =>
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data
-			});
-		});
+			})
+		);
 };
 
-export const setCurrentUser = (userData) => {
-	return {
-		type: SET_CURRENT_USER,
-		payload: userData
-	};
-};
+export const setCurrentUser = (userData) => ({
+	type: SET_CURRENT_USER,
+	payload: userData
+});
 
 // logout current signin user
 export const logoutUser = () => (dispatch) => {

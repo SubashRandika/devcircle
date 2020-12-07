@@ -5,12 +5,14 @@ import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { logoutUser, setCurrentUser } from './redux/actions/authActions';
+import { clearCurrentProfile } from './redux/actions/profileActions';
 import configureStore from './redux/configureStore';
 import Landing from './pages/Landing';
 import Authentication from './pages/Authentication';
 import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoutes from './components/routes/PublicRoutes';
+import Dashboard from './components/dashboard/Dashboard';
 
 const store = configureStore();
 
@@ -34,7 +36,8 @@ if (jwtToken) {
 		// logout currently login users
 		store.dispatch(logoutUser());
 
-		// TODO: Clear current Profile
+		// clear current Profile
+		store.dispatch(clearCurrentProfile());
 	}
 }
 
@@ -56,6 +59,7 @@ function App() {
 					</PublicRoutes>
 					<ProtectedRoute exact path='/dashboard'>
 						<Navbar />
+						<Dashboard />
 					</ProtectedRoute>
 				</Switch>
 			</Router>

@@ -6,6 +6,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import Logo from '../logo/Logo';
 import { logoutUser } from '../../redux/actions/authActions';
+import { clearCurrentProfile } from '../../redux/actions/profileActions';
 
 const logoText = {
 	fontWeight: '800',
@@ -18,13 +19,16 @@ const color = {
 	white: '#ffffff'
 };
 
-function Navbar({ logoutUser, auth }) {
+function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 	const history = useHistory();
 	const { user } = auth;
 
 	const handleLogout = (e) => {
 		e.preventDefault();
+
+		clearCurrentProfile();
 		logoutUser();
+
 		history.push('/signin');
 	};
 
@@ -77,6 +81,7 @@ function Navbar({ logoutUser, auth }) {
 
 Navbar.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
+	clearCurrentProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
 };
 
@@ -84,6 +89,6 @@ const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 
-const mapDispatchToProps = { logoutUser };
+const mapDispatchToProps = { logoutUser, clearCurrentProfile };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
