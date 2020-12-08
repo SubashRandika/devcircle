@@ -1,10 +1,11 @@
 import React from 'react';
+import { Container } from '@chakra-ui/react';
 
-function Content() {
+function Content({ children }) {
 	return (
-		<div>
-			<h1>Landing Section</h1>
-		</div>
+		<Container ml='0' mr='0' p='2.2rem 8rem' maxW='none'>
+			{children}
+		</Container>
 	);
 }
 

@@ -13,6 +13,7 @@ import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoutes from './components/routes/PublicRoutes';
 import Dashboard from './components/dashboard/Dashboard';
+import Content from './components/layout/Content';
 
 const store = configureStore();
 
@@ -59,7 +60,9 @@ function App() {
 					</PublicRoutes>
 					<ProtectedRoute exact path='/dashboard'>
 						<Navbar />
-						<Dashboard />
+						<Content>
+							<Dashboard />
+						</Content>
 					</ProtectedRoute>
 				</Switch>
 			</Router>
