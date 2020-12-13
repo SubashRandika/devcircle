@@ -37,4 +37,4 @@ Back-end API completed. You can run only back-end API via `npm start` inside pro
 
 ### Live Demo
 
-DevCircle is in live very soon. Please be ready to check that out.
+DevCircle will be live very soon. Please be ready to check that out.
