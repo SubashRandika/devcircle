@@ -16,7 +16,7 @@ import { ReactComponent as ComputerMan } from '../assets/computer_man.svg';
 import { ReactComponent as ProfileCard } from '../assets/profile_card.svg';
 import { ReactComponent as PostingWoman } from '../assets/posting_woman.svg';
 import './Landing.style.css';
-import Logo from '../components/logo/Logo';
+import Logo from '../components/common/Logo';
 
 const color = {
 	primaryColor: '#414f7a',

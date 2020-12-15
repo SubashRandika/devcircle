@@ -3,17 +3,17 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-function PublicRoutes({ children, auth, ...rest }) {
+function PrivateRoute({ children, auth, ...rest }) {
 	return (
 		<Route
 			{...rest}
 			render={({ location }) =>
-				!auth.isAuthenticated ? (
+				auth.isAuthenticated ? (
 					children
 				) : (
 					<Redirect
 						to={{
-							pathname: '/dashboard',
+							pathname: '/signin',
 							state: { from: location }
 						}}
 					/>
@@ -23,7 +23,7 @@ function PublicRoutes({ children, auth, ...rest }) {
 	);
 }
 
-PublicRoutes.propTypes = {
+PrivateRoute.propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.arrayOf(PropTypes.node),
 		PropTypes.node
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(PublicRoutes);
+export default connect(mapStateToProps, null)(PrivateRoute);

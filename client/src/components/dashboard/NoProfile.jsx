@@ -38,7 +38,7 @@ function NoProfile({ name }) {
 						You have not created your profile yet,
 					</Text>
 					<Text fontSize='xl' color={color.secondaryText}>
-						Please add some more information about you
+						Please add some extra information about you
 					</Text>
 					<Button
 						size='lg'
@@ -53,7 +53,7 @@ function NoProfile({ name }) {
 							bg: `linear-gradient(to left bottom, #a5568e, #d25a7f, #f06a63)`
 						}}
 					>
-						Create Profile
+						Create a Profile
 					</Button>
 				</SlideFade>
 			</Box>

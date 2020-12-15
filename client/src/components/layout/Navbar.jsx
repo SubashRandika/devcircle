@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Flex, Spacer, Avatar, Stack, Button, Tooltip } from '@chakra-ui/react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import Logo from '../logo/Logo';
+import Logo from '../common/Logo';
 import { logoutUser } from '../../redux/actions/authActions';
 import { clearCurrentProfile } from '../../redux/actions/profileActions';
 

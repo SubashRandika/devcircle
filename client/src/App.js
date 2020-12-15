@@ -10,8 +10,8 @@ import configureStore from './redux/configureStore';
 import Landing from './pages/Landing';
 import Authentication from './pages/Authentication';
 import Navbar from './components/layout/Navbar';
-import ProtectedRoute from './components/routes/ProtectedRoute';
-import PublicRoutes from './components/routes/PublicRoutes';
+import PrivateRoute from './components/common/PrivateRoute';
+import PublicRoute from './components/common/PublicRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Content from './components/layout/Content';
 
@@ -47,23 +47,23 @@ function App() {
 		<Provider store={store}>
 			<Router>
 				<Switch>
-					<PublicRoutes exact path='/'>
+					<PublicRoute exact path='/'>
 						<Container className='main_app' maxW='1650px'>
 							<Landing />
 						</Container>
-					</PublicRoutes>
-					<PublicRoutes exact path='/signin'>
+					</PublicRoute>
+					<PublicRoute exact path='/signin'>
 						<Authentication signup={false} />
-					</PublicRoutes>
-					<PublicRoutes exact path='/signup'>
+					</PublicRoute>
+					<PublicRoute exact path='/signup'>
 						<Authentication signup={true} />
-					</PublicRoutes>
-					<ProtectedRoute exact path='/dashboard'>
+					</PublicRoute>
+					<PrivateRoute exact path='/dashboard'>
 						<Navbar />
 						<Content>
 							<Dashboard />
 						</Content>
-					</ProtectedRoute>
+					</PrivateRoute>
 				</Switch>
 			</Router>
 		</Provider>
