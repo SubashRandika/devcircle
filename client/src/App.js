@@ -14,6 +14,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import PublicRoute from './components/common/PublicRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Content from './components/layout/Content';
+import CreateProfile from './components/create-profile/CreateProfile';
 
 const store = configureStore();
 
@@ -63,6 +64,12 @@ function App() {
 						<Content>
 							<Dashboard />
 						</Content>
+					</PrivateRoute>
+					<PrivateRoute exact path='/create-profile'>
+						<Navbar />
+						<Container maxW='xl' mt='30px' p='0'>
+							<CreateProfile />
+						</Container>
 					</PrivateRoute>
 				</Switch>
 			</Router>

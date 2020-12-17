@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
 	Flex,
 	Box,
@@ -19,6 +21,12 @@ const color = {
 };
 
 function NoProfile({ name }) {
+	const history = useHistory();
+
+	const handleClick = () => {
+		history.push('/create-profile');
+	};
+
 	return (
 		<Flex mt='10rem' justify='center' align='center'>
 			<Fade in={true}>
@@ -46,6 +54,7 @@ function NoProfile({ name }) {
 						bg='linear-gradient(to left bottom, #414f7a, #71558c, #a5568e, #d25a7f, #f06a63)'
 						color={color.white}
 						transition='all 0.2s ease-in-out'
+						onClick={handleClick}
 						_hover={{
 							bg: `linear-gradient(to left bottom, #a5568e, #d25a7f, #f06a63)`
 						}}
@@ -60,5 +69,9 @@ function NoProfile({ name }) {
 		</Flex>
 	);
 }
+
+NoProfile.propTypes = {
+	name: PropTypes.string.isRequired
+};
 
 export default NoProfile;
