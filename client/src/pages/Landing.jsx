@@ -78,6 +78,7 @@ function Landing() {
 						<Button
 							size='lg'
 							borderRadius='50px'
+							width='200px'
 							ml='80px'
 							mt='50px'
 							color={color.white}
@@ -85,7 +86,7 @@ function Landing() {
 							_hover={{ bg: color.primaryColor }}
 							_active={{ bg: color.primaryColor }}
 						>
-							Get Started Here
+							Join Now
 						</Button>
 					</Link>
 				</Box>

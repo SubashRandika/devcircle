@@ -67,7 +67,7 @@ function App() {
 					</PrivateRoute>
 					<PrivateRoute exact path='/create-profile'>
 						<Navbar />
-						<Container maxW='xl' mt='30px' p='0'>
+						<Container maxW='1530px' mt='30px' p='0'>
 							<CreateProfile />
 						</Container>
 					</PrivateRoute>
