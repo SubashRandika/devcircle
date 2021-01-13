@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
 	GET_PROFILE,
 	PROFILE_LOADING,
-	CLEAR_CURRENT_PROFILE
+	CLEAR_CURRENT_PROFILE,
+	GET_ERRORS
 } from '../constants/types';
 
 // set profile is still loading
@@ -28,6 +29,21 @@ export const getCurrentProfile = () => (dispatch) => {
 			dispatch({
 				type: GET_PROFILE,
 				payload: {}
+			})
+		);
+};
+
+// create or update profile details
+export const createUpdateProfile = (profileInfo, history) => (dispatch) => {
+	dispatch(setProfileLoading());
+
+	axios
+		.post('/api/profile', profileInfo)
+		.then((res) => history.push('/dashboard'))
+		.catch((err) =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
 			})
 		);
 };

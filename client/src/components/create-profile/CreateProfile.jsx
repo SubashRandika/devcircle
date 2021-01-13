@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import {
 	Flex,
 	Stack,
@@ -12,7 +13,6 @@ import {
 	InputGroup,
 	InputLeftElement,
 	Input,
-	FormHelperText,
 	HStack,
 	Textarea,
 	Switch,
@@ -32,6 +32,7 @@ import {
 import { connect } from 'react-redux';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import { createUpdateProfile } from '../../redux/actions/profileActions';
 
 import statusList from '../../data/status';
 import skillsList from '../../data/skills';
@@ -66,8 +67,10 @@ const inputStyles = {
 };
 
 const helperTextStyles = {
-	mb: '0.3rem !important',
-	textAlign: 'left'
+	mb: '0.2rem !important',
+	mt: '0.8rem !important',
+	textAlign: 'left',
+	fontSize: 'sm'
 };
 
 const statusSelectStyles = {
@@ -118,7 +121,7 @@ const selectCustomTheme = (theme) => {
 		}
 	};
 };
-function CreateProfile({ profile, errors }) {
+function CreateProfile({ profile, errors, createUpdateProfile }) {
 	const { handle, status, skills } = errors;
 	const animatedComponents = makeAnimated();
 	const [profileInfo, setProfileInfo] = useState({
@@ -137,6 +140,7 @@ function CreateProfile({ profile, errors }) {
 		instagram: '',
 		github: ''
 	});
+	const history = useHistory();
 
 	const [displaySocialMediaInputs, setDisplaySocialMedia] = useState(false);
 
@@ -150,7 +154,7 @@ function CreateProfile({ profile, errors }) {
 			...profileInfo
 		};
 
-		console.log(newProfile);
+		createUpdateProfile(newProfile, history);
 	};
 
 	const handleOnChange = (e) => {
@@ -162,7 +166,7 @@ function CreateProfile({ profile, errors }) {
 	};
 
 	const handleSkillsOnChange = (values, { name }) => {
-		const skills = values.map((value) => value.label).join(',');
+		const skills = values ? values.map((value) => value.label).join(',') : '';
 		setProfileInfo({ ...profileInfo, [name]: skills });
 	};
 
@@ -197,10 +201,10 @@ function CreateProfile({ profile, errors }) {
 									- Required Fields
 								</Text>
 							</HStack>
-							<FormHelperText {...helperTextStyles}>
+							<Text {...helperTextStyles}>
 								Unique handle for your profile URL. Can be your full name,
 								company name, nickname, etc.
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<InputLeftElement
 									{...inputLeftStyles}
@@ -214,16 +218,13 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.handle}
 									placeholder='Profile Handle'
 									onChange={handleOnChange}
-									errorBorderColor={handle ? 'red.400' : 'none'}
 								/>
-								<FormErrorMessage {...formErrorStyles}>
-									{handle}
-								</FormErrorMessage>
 							</InputGroup>
+							<FormErrorMessage {...formErrorStyles}>{handle}</FormErrorMessage>
 							<Box mt='0 !important'>
-								<FormHelperText {...helperTextStyles}>
+								<Text {...helperTextStyles}>
 									Give us an idea of where you are at in your career
-								</FormHelperText>
+								</Text>
 								<CreatableSelect
 									name='status'
 									placeholder={
@@ -239,19 +240,20 @@ function CreateProfile({ profile, errors }) {
 											...provided,
 											borderColor: status
 												? `${color.onErrorBorder} !important`
-												: 'none'
+												: '#E2E8F0 !important',
+											boxShadow: status
+												? `0 0 0 1px ${color.onErrorBorder}`
+												: ''
 										})
 									}}
 									theme={selectCustomTheme}
 									onChange={handleStatusOnChange.bind(this)}
 								/>
-								<FormErrorMessage {...formErrorStyles}>
-									{status}
-								</FormErrorMessage>
 							</Box>
-							<FormHelperText {...helperTextStyles}>
+							<FormErrorMessage {...formErrorStyles}>{status}</FormErrorMessage>
+							<Text {...helperTextStyles}>
 								It could be your own company or one you work for
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<Input
 									{...inputStyles}
@@ -260,11 +262,12 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.company}
 									placeholder='Company'
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</InputGroup>
-							<FormHelperText {...helperTextStyles}>
+							<Text {...helperTextStyles}>
 								It could be your own or a company website
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<Input
 									{...inputStyles}
@@ -273,12 +276,13 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.website}
 									placeholder='Website'
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</InputGroup>
-							<FormHelperText {...helperTextStyles}>
+							<Text {...helperTextStyles}>
 								City & state, Whatever you are at recently (eg. Colombo,
 								Western)
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<Input
 									{...inputStyles}
@@ -287,12 +291,13 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.location}
 									placeholder='Location'
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</InputGroup>
-							<FormHelperText {...helperTextStyles}>
+							<Text fontSize='sm' {...helperTextStyles}>
 								If you want your latest repositories with a Github link, include
 								your username here
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<Input
 									{...inputStyles}
@@ -301,11 +306,12 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.githubusername}
 									placeholder='Github Username'
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</InputGroup>
-							<FormHelperText {...helperTextStyles}>
+							<Text {...helperTextStyles}>
 								Tell us little bit about yourself
-							</FormHelperText>
+							</Text>
 							<InputGroup mt='0 !important'>
 								<Textarea
 									{...inputStyles}
@@ -313,15 +319,16 @@ function CreateProfile({ profile, errors }) {
 									value={profileInfo.bio}
 									placeholder='A short bio about your self'
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</InputGroup>
 						</Stack>
 						<Stack spacing={5} w='100%' mt='1.57rem'>
 							<Box>
-								<FormHelperText {...helperTextStyles} mb='0.3rem'>
+								<Text {...helperTextStyles} mb='0.3rem'>
 									Select skills that you are most good at. Feel free to add new
 									skills which are not in the list.
-								</FormHelperText>
+								</Text>
 								<CreatableSelect
 									isMulti
 									name='skills'
@@ -334,7 +341,10 @@ function CreateProfile({ profile, errors }) {
 											...provided,
 											borderColor: skills
 												? `${color.onErrorBorder} !important`
-												: 'none'
+												: '#E2E8F0 !important',
+											boxShadow: status
+												? `0 0 0 1px ${color.onErrorBorder}`
+												: ''
 										})
 									}}
 									closeMenuOnSelect={false}
@@ -346,9 +356,9 @@ function CreateProfile({ profile, errors }) {
 								</FormErrorMessage>
 							</Box>
 							<Box display='flex' alignItems='center' mt='0.5rem !important'>
-								<FormHelperText {...helperTextStyles} mb='0.8rem' mr='0.8rem'>
+								<Text {...helperTextStyles} mb='0.8rem' mr='0.8rem'>
 									Enable your social media links
-								</FormHelperText>
+								</Text>
 								<Text
 									fontSize='sm'
 									color={`${color.linkColor}`}
@@ -382,6 +392,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.facebook}
 										placeholder='Facebook Page URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 								<InputGroup>
@@ -398,6 +409,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.linkedin}
 										placeholder='Linkedin Profile URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 								<InputGroup>
@@ -414,6 +426,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.twitter}
 										placeholder='Twitter Profile URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 								<InputGroup>
@@ -430,6 +443,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.instagram}
 										placeholder='Instagram Page URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 								<InputGroup>
@@ -446,6 +460,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.youtube}
 										placeholder='Youtube Channel URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 								<InputGroup>
@@ -462,6 +477,7 @@ function CreateProfile({ profile, errors }) {
 										value={profileInfo.github}
 										placeholder='Github Profile URL'
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</InputGroup>
 							</Stack>
@@ -501,4 +517,6 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+const mapDispatchToProps = { createUpdateProfile };
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProfile);
