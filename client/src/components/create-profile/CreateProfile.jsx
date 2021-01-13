@@ -119,7 +119,7 @@ const selectCustomTheme = (theme) => {
 	};
 };
 function CreateProfile({ profile, errors }) {
-	const { handle, status } = errors;
+	const { handle, status, skills } = errors;
 	const animatedComponents = makeAnimated();
 	const [profileInfo, setProfileInfo] = useState({
 		handle: '',
@@ -328,11 +328,22 @@ function CreateProfile({ profile, errors }) {
 									placeholder='Skills'
 									components={animatedComponents}
 									options={developerSkills}
-									styles={statusSelectStyles}
+									styles={{
+										...statusSelectStyles,
+										control: (provided, state) => ({
+											...provided,
+											borderColor: skills
+												? `${color.onErrorBorder} !important`
+												: 'none'
+										})
+									}}
 									closeMenuOnSelect={false}
 									theme={selectCustomTheme}
 									onChange={handleSkillsOnChange.bind(this)}
 								/>
+								<FormErrorMessage {...formErrorStyles}>
+									{skills}
+								</FormErrorMessage>
 							</Box>
 							<Box display='flex' alignItems='center' mt='0.5rem !important'>
 								<FormHelperText {...helperTextStyles} mb='0.8rem' mr='0.8rem'>
