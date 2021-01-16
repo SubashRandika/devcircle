@@ -43,7 +43,7 @@ function ProfileActions({ name, profile, deleteAccount }) {
 						Welcome
 					</Heading>
 					<Heading as='h2' size='md' color={color.linkColor}>
-						<Link to={`/profile/${profile.han}`}>{name}</Link>
+						<Link to={`/profile/${profile.handle}`}>{name}</Link>
 					</Heading>
 				</HStack>
 			</VStack>
