@@ -40,7 +40,7 @@ const skillsList = [
 	{ value: 'graphql', label: 'GraphQL' },
 	{ value: 'bootstrap', label: 'Bootstrap' },
 	{ value: 'react_redux', label: 'React Redux' },
-	{ value: 'html', label: 'html' },
+	{ value: 'html', label: 'HTML' },
 	{ value: 'css', label: 'CSS' },
 	{ value: 'less', label: 'LESS' },
 	{ value: 'sass', label: 'SASS' },

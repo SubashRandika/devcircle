@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Flex, Spacer, Avatar, Stack, Button, Tooltip } from '@chakra-ui/react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
@@ -35,7 +35,9 @@ function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 	return (
 		<Flex as='nav' padding='1.2rem 12rem' bg='gray.50' boxShadow='xs'>
 			<Stack direction='row' spacing={12}>
-				<Logo {...logoText} />
+				<Link to='/dashboard'>
+					<Logo {...logoText} />
+				</Link>
 				<Button colorScheme='blue' variant='ghost' fontSize='20px'>
 					Developers
 				</Button>

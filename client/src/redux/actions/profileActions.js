@@ -5,47 +5,70 @@ import {
 	CLEAR_CURRENT_PROFILE,
 	GET_ERRORS
 } from '../constants/types';
+import { logoutUser } from './authActions';
 
 // set profile is still loading
-export const setProfileLoading = () => {
+export const setProfileLoading = (loading) => {
 	return {
-		type: PROFILE_LOADING
+		type: PROFILE_LOADING,
+		payload: loading
 	};
+};
+
+// delete entire user account with profile and logout the user
+export const deleteAccount = () => (dispatch) => {
+	axios
+		.delete('/api/profile/')
+		.then((res) => {
+			dispatch(logoutUser());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
 };
 
 // retrieve current profile
 export const getCurrentProfile = () => (dispatch) => {
-	dispatch(setProfileLoading());
+	dispatch(setProfileLoading(true));
 
 	axios
 		.get('/api/profile')
-		.then((res) =>
+		.then((res) => {
+			dispatch(setProfileLoading(false));
 			dispatch({
 				type: GET_PROFILE,
 				payload: res.data
-			})
-		)
-		.catch((err) =>
+			});
+		})
+		.catch((err) => {
+			dispatch(setProfileLoading(false));
 			dispatch({
 				type: GET_PROFILE,
 				payload: {}
-			})
-		);
+			});
+		});
 };
 
 // create or update profile details
 export const createUpdateProfile = (profileInfo, history) => (dispatch) => {
-	dispatch(setProfileLoading());
+	dispatch(setProfileLoading(true));
 
 	axios
 		.post('/api/profile', profileInfo)
-		.then((res) => history.push('/dashboard'))
-		.catch((err) =>
+		.then((res) => {
+			dispatch(setProfileLoading(false));
+			history.push('/dashboard');
+		})
+		.catch((err) => {
+			dispatch(setProfileLoading(false));
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data
-			})
-		);
+			});
+		});
 };
 
 // clear current profile
