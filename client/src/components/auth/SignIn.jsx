@@ -33,7 +33,7 @@ const formErrorStyles = {
 	textAlign: 'left'
 };
 
-function SignIn({ isRightPanelActive, loginUser, auth, errors }) {
+function SignIn({ isRightPanelActive, loginUser, auth: { loading }, errors }) {
 	const { email, password } = errors;
 	const history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
@@ -132,6 +132,8 @@ function SignIn({ isRightPanelActive, loginUser, auth, errors }) {
 					</ForgotPassword>
 					<Button
 						type='submit'
+						isLoading={loading}
+						loadingText='Signing in'
 						borderRadius='20px'
 						border={`2px solid ${color.primaryColor}`}
 						bgColor={color.primaryColor}

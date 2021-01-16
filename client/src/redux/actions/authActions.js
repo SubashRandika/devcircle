@@ -1,27 +1,38 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
-import { CLEAR_ERRORS, GET_ERRORS, SET_CURRENT_USER } from '../constants/types';
+import {
+	CLEAR_ERRORS,
+	GET_ERRORS,
+	SET_CURRENT_USER,
+	SET_USER_LOADING
+} from '../constants/types';
 
 // Register user (SignUp user)
 export const registerUser = (userData, history) => (dispatch) => {
+	dispatch(setUserLoading(true));
+
 	axios
 		.post('/api/users/register', userData)
 		.then(() => {
+			dispatch(setUserLoading(false));
 			// navigate to signin route with page reload
 			history.push('/signin');
 			history.go(0);
 		})
-		.catch((err) =>
+		.catch((err) => {
+			dispatch(setUserLoading(false));
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data
-			})
-		);
+			});
+		});
 };
 
 // Login user (SignIn user)
 export const loginUser = (credentials, history) => (dispatch) => {
+	dispatch(setUserLoading(true));
+
 	axios
 		.post('/api/users/login', credentials)
 		.then((res) => {
@@ -38,16 +49,27 @@ export const loginUser = (credentials, history) => (dispatch) => {
 
 			// set current login user
 			dispatch(setCurrentUser(decodedUserData));
+
+			// clear out the loading state once authentication done.
+			dispatch(setUserLoading(false));
+
 			// navigate to dashboard route
 			history.push('/dashboard');
 		})
-		.catch((err) =>
+		.catch((err) => {
+			dispatch(setUserLoading(false));
 			dispatch({
 				type: GET_ERRORS,
 				payload: err.response.data
-			})
-		);
+			});
+		});
 };
+
+// show loading state until authentication done
+export const setUserLoading = (loading) => ({
+	type: SET_USER_LOADING,
+	payload: loading
+});
 
 export const setCurrentUser = (userData) => ({
 	type: SET_CURRENT_USER,

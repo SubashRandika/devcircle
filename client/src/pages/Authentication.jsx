@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Flex, Text, ScaleFade, Fade } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SignIn from '../components/auth/SignIn';
 import SignUp from '../components/auth/SignUp';
 import Overlay from '../components/auth/Overlay';
+import { clearErrors } from '../redux/actions/authActions';
 
 const color = {
 	primaryColor: '#414f7a',
@@ -18,10 +20,11 @@ const logoText = {
 	lineHeight: '55px'
 };
 
-function Authentication({ signup }) {
+function Authentication({ signup, clearErrors }) {
 	const [rightPanelActive, setRightPanelActive] = useState(signup);
 
 	const handleButtonClick = (isRightActive) => {
+		clearErrors();
 		setRightPanelActive(isRightActive);
 	};
 
@@ -69,4 +72,6 @@ function Authentication({ signup }) {
 	);
 }
 
-export default Authentication;
+const mapDispatchToProps = { clearErrors };
+
+export default connect(null, mapDispatchToProps)(Authentication);

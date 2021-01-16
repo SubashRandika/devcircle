@@ -54,7 +54,12 @@ const show = keyframes`
 	}
 `;
 
-function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
+function SignUp({
+	isRightPanelActive,
+	registerUser,
+	auth: { loading },
+	errors
+}) {
 	const { name, email, password, confirmPassword } = errors;
 	let history = useHistory();
 	const [showPassword, setShowPassword] = useState(false);
@@ -189,6 +194,8 @@ function SignUp({ isRightPanelActive, registerUser, auth, errors }) {
 					</Stack>
 					<Button
 						type='submit'
+						isLoading={loading}
+						loadingText='Signing Up'
 						borderRadius='20px'
 						border={`2px solid ${color.secondaryColor}`}
 						bgColor={color.secondaryColor}
