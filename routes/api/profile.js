@@ -123,7 +123,7 @@ const createProfileObject = (req) => {
 	}
 
 	if (req.body.skills) {
-		profileObject.skills = req.body.skills.split(',');
+		profileObject.skills = req.body.skills;
 	}
 
 	// social object creation

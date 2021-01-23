@@ -6,7 +6,6 @@ const validateProfileInput = (data) => {
 
 	data.handle = !isEmpty(data.handle) ? data.handle : '';
 	data.status = !isEmpty(data.status) ? data.status : '';
-	data.skills = !isEmpty(data.skills) ? data.skills : '';
 
 	if (Validator.isEmpty(data.handle)) {
 		errors.handle = 'Profile handle field is required';
@@ -19,8 +18,10 @@ const validateProfileInput = (data) => {
 		errors.status = 'Status field is required';
 	}
 
-	if (Validator.isEmpty(data.skills)) {
+	if (!data.skills) {
 		errors.skills = 'Skills field is required';
+	} else if (data.skills.length === 0) {
+		errors.skills = 'At least one skill required';
 	}
 
 	if (!isEmpty(data.website)) {
