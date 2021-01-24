@@ -15,6 +15,7 @@ import PublicRoute from './components/common/PublicRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import Content from './components/layout/Content';
 import CreateProfile from './components/create-profile/CreateProfile';
+import UpdateProfile from './components/update-profile/UpdateProfile';
 
 const store = configureStore();
 
@@ -69,6 +70,12 @@ function App() {
 						<Navbar />
 						<Container maxW='1530px' mt='30px' p='0'>
 							<CreateProfile />
+						</Container>
+					</PrivateRoute>
+					<PrivateRoute exact path='/update-profile'>
+						<Navbar />
+						<Container maxW='1530px' mt='30px' p='0'>
+							<UpdateProfile />
 						</Container>
 					</PrivateRoute>
 				</Switch>

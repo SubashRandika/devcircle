@@ -61,7 +61,7 @@ const inputLeftStyles = {
 };
 
 const inputStyles = {
-	pl: '2rem',
+	pl: '1rem',
 	borderRadius: '0.125rem',
 	size: 'md'
 };
@@ -92,7 +92,7 @@ const statusSelectStyles = {
 		fontSize: '1em',
 		color: `${color.placeholderColor}`,
 		fontWeight: 400,
-		paddingLeft: '0.35rem'
+		paddingLeft: '0'
 	})
 };
 
@@ -161,13 +161,12 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 		setProfileInfo({ ...profileInfo, [e.target.name]: e.target.value });
 	};
 
-	const handleStatusOnChange = ({ label }, { name }) => {
-		setProfileInfo({ ...profileInfo, [name]: label });
+	const handleStatusOnChange = (e) => {
+		setProfileInfo({ ...profileInfo, status: e.label });
 	};
 
-	const handleSkillsOnChange = (values, { name }) => {
-		const skills = values ? values.map((value) => value.label).join(',') : '';
-		setProfileInfo({ ...profileInfo, [name]: skills });
+	const handleSkillsOnChange = (skills) => {
+		setProfileInfo({ ...profileInfo, skills: skills.map((obj) => obj.label) });
 	};
 
 	const handleDisplaySocialMediaInputs = (event) => {
@@ -179,7 +178,7 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 			<Stack spacing={3} textAlign='center' w='100%' h='100%'>
 				<Heading size='2xl'>Create Your Profile</Heading>
 				<Text fontSize='xl'>
-					Let's get some additional information to make your profile stand out
+					Let's get some information to make your profile stand out
 				</Text>
 				<FormControl
 					as='form'
@@ -201,16 +200,15 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 									- Required Fields
 								</Text>
 							</HStack>
-							<Text {...helperTextStyles}>
-								Unique handle for your profile URL. Can be your full name,
-								company name, nickname, etc.
-							</Text>
+							<HStack mt='0 !important'>
+								<Text {...helperTextStyles}>
+									Unique handle for your profile URL. Can be your full name,
+									company name, nickname, etc.
+								</Text>
+								<FaStarOfLife style={requiredStarStyles} />
+							</HStack>
 							<InputGroup mt='0 !important'>
-								<InputLeftElement
-									{...inputLeftStyles}
-									pointerEvents='none'
-									children={<FaStarOfLife style={requiredStarStyles} />}
-								/>
+								<InputLeftElement {...inputLeftStyles} pointerEvents='none' />
 								<Input
 									{...inputStyles}
 									type='text'
@@ -222,17 +220,15 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 							</InputGroup>
 							<FormErrorMessage {...formErrorStyles}>{handle}</FormErrorMessage>
 							<Box mt='0 !important'>
-								<Text {...helperTextStyles}>
-									Give us an idea of where you are at in your career
-								</Text>
+								<HStack>
+									<Text {...helperTextStyles}>
+										Give us an idea of where you are at in your career
+									</Text>
+									<FaStarOfLife style={requiredStarStyles} />
+								</HStack>
 								<CreatableSelect
 									name='status'
-									placeholder={
-										<HStack>
-											<FaStarOfLife style={requiredStarStyles} />
-											<Text>Select Professional Status</Text>
-										</HStack>
-									}
+									placeholder={<Text>Select Professional Status</Text>}
 									options={developerStatus}
 									styles={{
 										...statusSelectStyles,
@@ -244,6 +240,10 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 											boxShadow: status
 												? `0 0 0 1px ${color.onErrorBorder}`
 												: ''
+										}),
+										valueContainer: (provided, state) => ({
+											...provided,
+											padding: '2px 14px'
 										})
 									}}
 									theme={selectCustomTheme}
@@ -325,10 +325,13 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 						</Stack>
 						<Stack spacing={5} w='100%' mt='1.57rem'>
 							<Box>
-								<Text {...helperTextStyles} mb='0.3rem'>
-									Select skills that you are most good at. Feel free to add new
-									skills which are not in the list.
-								</Text>
+								<HStack>
+									<Text {...helperTextStyles} mb='0.3rem'>
+										Select skills that you are most good at. Feel free to add
+										new skills which are not in the list.
+									</Text>
+									<FaStarOfLife style={requiredStarStyles} />
+								</HStack>
 								<CreatableSelect
 									isMulti
 									name='skills'
@@ -487,9 +490,6 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 									size='md'
 									width='180px'
 									ml='80px'
-									mt='50px'
-									position='fixed'
-									bottom='10.5rem'
 									color={color.white}
 									bgColor={color.secondaryColor}
 									_hover={{ bg: color.primaryColor }}
@@ -509,7 +509,8 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 
 CreateProfile.propTypes = {
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
+	errors: PropTypes.object.isRequired,
+	createUpdateProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

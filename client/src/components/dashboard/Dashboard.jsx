@@ -14,9 +14,9 @@ const color = {
 	primaryColor: '#414f7a'
 };
 
-function Dashboard({ auth, userProfile, getCurrentProfile, deleteAccount }) {
+function Dashboard({ auth, profile, getCurrentProfile, deleteAccount }) {
 	const { user } = auth;
-	const { profile, loading } = userProfile;
+	const { currentProfile, loading } = profile;
 	let dashboardContent;
 
 	useEffect(() => {
@@ -30,11 +30,11 @@ function Dashboard({ auth, userProfile, getCurrentProfile, deleteAccount }) {
 	if (loading) {
 		dashboardContent = <Loading color={color.primaryColor} text='Loading...' />;
 	} else {
-		if (profile && Object.keys(profile).length > 0) {
+		if (currentProfile && Object.keys(currentProfile).length > 0) {
 			dashboardContent = (
 				<ProfileActions
 					name={user.name}
-					profile={profile}
+					profile={currentProfile}
 					deleteAccount={handleDeleteAccount}
 				/>
 			);
@@ -59,7 +59,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = (state) => ({
 	auth: state.auth,
-	userProfile: state.profile
+	profile: state.profile
 });
 
 const mapDispatchToProps = { getCurrentProfile, deleteAccount };

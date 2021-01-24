@@ -49,13 +49,15 @@ function ProfileActions({ name, profile, deleteAccount }) {
 			</VStack>
 			<Flex justify='space-between'>
 				<HStack>
-					<Button
-						variant='outline'
-						colorScheme='blue'
-						leftIcon={<FaUserEdit />}
-					>
-						Edit Profile
-					</Button>
+					<Link to='/update-profile'>
+						<Button
+							variant='outline'
+							colorScheme='blue'
+							leftIcon={<FaUserEdit />}
+						>
+							Edit Profile
+						</Button>
+					</Link>
 					<Button variant='outline' colorScheme='cyan' leftIcon={<FaUserTie />}>
 						Add Experience
 					</Button>
