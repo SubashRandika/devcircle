@@ -11,7 +11,6 @@ import {
 	FormControl,
 	FormErrorMessage,
 	InputGroup,
-	InputLeftElement,
 	Input,
 	HStack,
 	Textarea,
@@ -49,15 +48,6 @@ const color = {
 	placeholderColor: '#A0AEC0',
 	selectOptionBorderBottom: '#f3f3f3',
 	onErrorBorder: '#F56565'
-};
-
-const inputLeftStyles = {
-	pl: '0',
-	pr: '0',
-	w: '2.5rem',
-	h: '2.5rem',
-	fontSize: '10px',
-	cursor: 'pointer'
 };
 
 const inputStyles = {
@@ -208,7 +198,6 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 								<FaStarOfLife style={requiredStarStyles} />
 							</HStack>
 							<InputGroup mt='0 !important'>
-								<InputLeftElement {...inputLeftStyles} pointerEvents='none' />
 								<Input
 									{...inputStyles}
 									type='text'
