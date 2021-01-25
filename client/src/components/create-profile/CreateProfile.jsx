@@ -494,7 +494,7 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 									bgColor={color.secondaryColor}
 									_hover={{ bg: color.primaryColor }}
 									_active={{ bg: color.primaryColor }}
-									rightIcon={<FaSave />}
+									leftIcon={<FaSave />}
 								>
 									Save Info
 								</Button>
