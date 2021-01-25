@@ -58,7 +58,8 @@ const color = {
 const inputStyles = {
 	pl: '1rem',
 	borderRadius: '0.125rem',
-	size: 'md'
+	size: 'md',
+	mt: '0 !important'
 };
 
 const helperTextStyles = {
@@ -253,16 +254,14 @@ function UpdateProfile({
 									</Text>
 									<FaStarOfLife style={requiredStarStyles} />
 								</HStack>
-								<InputGroup mt='0 !important'>
-									<Input
-										{...inputStyles}
-										type='text'
-										name='handle'
-										value={profileInfo.handle || ''}
-										placeholder='Profile Handle'
-										onChange={handleOnChange}
-									/>
-								</InputGroup>
+								<Input
+									{...inputStyles}
+									type='text'
+									name='handle'
+									value={profileInfo.handle || ''}
+									placeholder='Profile Handle'
+									onChange={handleOnChange}
+								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{handle}
 								</FormErrorMessage>
@@ -304,79 +303,69 @@ function UpdateProfile({
 								<Text {...helperTextStyles}>
 									It could be your own company or one you work for
 								</Text>
-								<InputGroup mt='0 !important'>
-									<Input
-										{...inputStyles}
-										type='text'
-										name='company'
-										value={profileInfo.company || ''}
-										placeholder='Company'
-										onChange={handleOnChange}
-										errorBorderColor='grey.300'
-									/>
-								</InputGroup>
+								<Input
+									{...inputStyles}
+									type='text'
+									name='company'
+									value={profileInfo.company || ''}
+									placeholder='Company'
+									onChange={handleOnChange}
+									errorBorderColor='grey.300'
+								/>
 								<Text {...helperTextStyles}>
 									It could be your own or a company website
 								</Text>
-								<InputGroup mt='0 !important'>
-									<Input
-										{...inputStyles}
-										type='text'
-										name='website'
-										value={profileInfo.website || ''}
-										placeholder='Website'
-										onChange={handleOnChange}
-										errorBorderColor='grey.300'
-									/>
-								</InputGroup>
+								<Input
+									{...inputStyles}
+									type='text'
+									name='website'
+									value={profileInfo.website || ''}
+									placeholder='Website'
+									onChange={handleOnChange}
+									errorBorderColor='grey.300'
+								/>
 								<Text {...helperTextStyles}>
 									City & state, Whatever you are at recently (eg. Colombo,
 									Western)
 								</Text>
-								<InputGroup mt='0 !important'>
-									<Input
-										{...inputStyles}
-										type='text'
-										name='location'
-										value={profileInfo.location || ''}
-										placeholder='Location'
-										onChange={handleOnChange}
-										errorBorderColor='grey.300'
-									/>
-								</InputGroup>
+								<Input
+									{...inputStyles}
+									type='text'
+									name='location'
+									value={profileInfo.location || ''}
+									placeholder='Location'
+									onChange={handleOnChange}
+									errorBorderColor='grey.300'
+								/>
 								<Text fontSize='sm' {...helperTextStyles}>
 									If you want your latest repositories with a Github link,
 									include your username here
 								</Text>
-								<InputGroup mt='0 !important'>
-									<Input
-										{...inputStyles}
-										type='text'
-										name='githubusername'
-										value={profileInfo.githubusername || ''}
-										placeholder='Github Username'
-										onChange={handleOnChange}
-										errorBorderColor='grey.300'
-									/>
-								</InputGroup>
+								<Input
+									{...inputStyles}
+									type='text'
+									name='githubusername'
+									value={profileInfo.githubusername || ''}
+									placeholder='Github Username'
+									onChange={handleOnChange}
+									errorBorderColor='grey.300'
+								/>
 								<Text {...helperTextStyles}>
 									Tell us little bit about yourself
 								</Text>
-								<InputGroup mt='0 !important'>
-									<Textarea
-										{...inputStyles}
-										name='bio'
-										value={profileInfo.bio || ''}
-										placeholder='A short bio about your self'
-										onChange={handleOnChange}
-										errorBorderColor='grey.300'
-									/>
-								</InputGroup>
+								<Textarea
+									{...inputStyles}
+									name='bio'
+									value={profileInfo.bio || ''}
+									placeholder='A short bio about your self'
+									onChange={handleOnChange}
+									errorBorderColor='grey.300'
+								/>
 							</Stack>
 							<Stack spacing={5} w='100%' mt='1.57rem'>
 								<Box>
 									<HStack>
-										<Text {...helperTextStyles} mb='0.3rem'>
+										<Text {...helperTextStyles} mb='0.1rem' mt='0.56rem'>
 											Select skills that you are most good at. Feel free to add
 											new skills which are not in the list.
 										</Text>
@@ -409,7 +398,7 @@ function UpdateProfile({
 										{skills}
 									</FormErrorMessage>
 								</Box>
-								<Box display='flex' alignItems='center' mt='0.5rem !important'>
+								<Box display='flex' alignItems='center' mt='1rem !important'>
 									<Text {...helperTextStyles} mb='0.8rem' mr='0.8rem'>
 										Enable your social media links
 									</Text>
