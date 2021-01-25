@@ -15,12 +15,8 @@ import {
 	HStack,
 	VStack
 } from '@chakra-ui/react';
-import {
-	FaUserEdit,
-	FaUserTie,
-	FaUserGraduate,
-	FaTrashAlt
-} from 'react-icons/fa';
+import { FaUserEdit, FaUserGraduate, FaTrashAlt } from 'react-icons/fa';
+import AddExperience from '../proficiency/AddExperience';
 
 const color = {
 	secondaryColor: '#f06a63',
@@ -58,9 +54,7 @@ function ProfileActions({ name, profile, deleteAccount }) {
 							Edit Profile
 						</Button>
 					</Link>
-					<Button variant='outline' colorScheme='cyan' leftIcon={<FaUserTie />}>
-						Add Experience
-					</Button>
+					<AddExperience />
 					<Button
 						variant='outline'
 						colorScheme='teal'
