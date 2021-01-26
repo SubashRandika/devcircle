@@ -109,7 +109,9 @@ function AddExperience() {
 								/>
 								<FormErrorMessage {...formErrorStyles}></FormErrorMessage>
 								<HStack mt='0 !important'>
-									<Text {...helperTextStyles}>Company name you worked</Text>
+									<Text {...helperTextStyles}>
+										Company name you have worked
+									</Text>
 									<FaStarOfLife style={requiredStarStyles} />
 								</HStack>
 								<Input
@@ -127,7 +129,7 @@ function AddExperience() {
 									{...inputStyles}
 									type='text'
 									name='location'
-									placeholder='Company Address'
+									placeholder='Company Location'
 									onChange={handleOnChange}
 								/>
 								<Text {...helperTextStyles}>Work period</Text>
@@ -146,11 +148,11 @@ function AddExperience() {
 										onChange={handleOnChange}
 									/>
 								</HStack>
-								<Checkbox>
-									<Text fontSize='sm'>Current Job</Text>
+								<Checkbox w='13rem'>
+									<Text fontSize='sm'>I'm currently working here</Text>
 								</Checkbox>
 								<Text {...helperTextStyles}>
-									Give your job description with some of your responsibilities,
+									Provide your job description with some of responsibilities,
 									tasks, etc
 								</Text>
 								<Textarea
