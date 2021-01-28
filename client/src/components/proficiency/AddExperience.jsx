@@ -98,7 +98,11 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 			isCurrent: false,
 			description: ''
 		});
-		clearErrors();
+
+		if (Object.keys(errors).length > 0) {
+			clearErrors();
+		}
+
 		onClose();
 	};
 
