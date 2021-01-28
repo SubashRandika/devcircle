@@ -74,6 +74,23 @@ export const addNewExperience = (experienceInfo, onClose) => (dispatch) => {
 		);
 };
 
+// add a new education details to the profile
+export const addNewEducation = (educationalInfo, onClose) => (dispatch) => {
+	axios
+		.post('/api/profile/education', educationalInfo)
+		.then((res) => {
+			dispatch(clearErrors());
+			onClose();
+			dispatch(getCurrentProfile());
+		})
+		.catch((err) =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
 // clear current profile
 export const clearCurrentProfile = () => {
 	return {
