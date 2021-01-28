@@ -6,6 +6,7 @@ import {
 	GET_ERRORS
 } from '../constants/types';
 import { logoutUser } from './authActions';
+import { clearErrors } from './errorActions';
 
 // set profile is still loading
 export const setProfileLoading = (loading) => {
@@ -13,21 +14,6 @@ export const setProfileLoading = (loading) => {
 		type: PROFILE_LOADING,
 		payload: loading
 	};
-};
-
-// delete entire user account with profile and logout the user
-export const deleteAccount = () => (dispatch) => {
-	axios
-		.delete('/api/profile/')
-		.then((res) => {
-			dispatch(logoutUser());
-		})
-		.catch((err) => {
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
-			});
-		});
 };
 
 // retrieve current profile
@@ -71,9 +57,41 @@ export const createUpdateProfile = (profileInfo, history) => (dispatch) => {
 		});
 };
 
+// add a new experience to the profile
+export const addNewExperience = (experienceInfo, onClose) => (dispatch) => {
+	axios
+		.post('/api/profile/experience', experienceInfo)
+		.then((res) => {
+			dispatch(clearErrors());
+			onClose();
+			dispatch(getCurrentProfile());
+		})
+		.catch((err) =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
 // clear current profile
 export const clearCurrentProfile = () => {
 	return {
 		type: CLEAR_CURRENT_PROFILE
 	};
+};
+
+// delete entire user account with profile and logout the user
+export const deleteAccount = () => (dispatch) => {
+	axios
+		.delete('/api/profile/')
+		.then((res) => {
+			dispatch(logoutUser());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
 };

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
 	Button,
 	FormControl,
@@ -19,6 +20,9 @@ import {
 	Textarea
 } from '@chakra-ui/react';
 import { FaSave, FaStarOfLife, FaUserTie } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { addNewExperience } from '../../redux/actions/profileActions';
+import { clearErrors } from '../../redux/actions/errorActions';
 
 const color = {
 	primaryColor: '#414f7a',
@@ -54,23 +58,55 @@ const formErrorStyles = {
 	textAlign: 'left'
 };
 
-function AddExperience() {
+function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
+	const { title, company, from } = errors;
+	const initialRef = useRef();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [experience, setExperience] = useState({
+		title: '',
+		company: '',
+		location: '',
+		from: '',
+		to: '',
+		isCurrent: false,
+		description: ''
+	});
 
-	const handleOnSubmit = (e) => {
-		e.preventDefault();
-		console.log('Experience Saved');
+	const handleExperienceSave = (e) => {
+		const newExperience = {
+			...experience
+		};
+
+		addNewExperience(newExperience, onClose);
 	};
 
 	const handleOnChange = (e) => {
-		console.log('Input Changed');
+		setExperience({ ...experience, [e.target.name]: e.target.value });
+	};
+
+	const handleOnCheckChange = (e) => {
+		setExperience({ ...experience, isCurrent: e.target.checked });
+	};
+
+	const resetModalOnClose = () => {
+		setExperience({
+			title: '',
+			company: '',
+			location: '',
+			from: '',
+			to: '',
+			isCurrent: false,
+			description: ''
+		});
+		clearErrors();
+		onClose();
 	};
 
 	return (
 		<React.Fragment>
 			<Button
 				variant='outline'
-				colorScheme='cyan'
+				colorScheme='blue'
 				leftIcon={<FaUserTie />}
 				onClick={onOpen}
 			>
@@ -78,17 +114,23 @@ function AddExperience() {
 			</Button>
 			<Modal
 				isCentered
+				useInert
 				size='3xl'
-				motionPreset='slideInBottom'
+				motionPreset='scale'
+				initialFocusRef={initialRef}
 				isOpen={isOpen}
-				onClose={onClose}
+				onClose={resetModalOnClose}
 			>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Add Your Experience</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						<FormControl as='form' noValidate onSubmit={handleOnSubmit}>
+						<FormControl
+							as='form'
+							noValidate
+							isInvalid={Object.keys(errors).length !== 0}
+						>
 							<Stack spacing={3} w='100%'>
 								<HStack>
 									<FaStarOfLife style={requiredStarStyles} />
@@ -105,9 +147,14 @@ function AddExperience() {
 									type='text'
 									name='title'
 									placeholder='Job Title'
+									ref={initialRef}
+									value={experience.title}
 									onChange={handleOnChange}
+									errorBorderColor={title ? 'red.400' : 'grey.300'}
 								/>
-								<FormErrorMessage {...formErrorStyles}></FormErrorMessage>
+								<FormErrorMessage {...formErrorStyles}>
+									{title}
+								</FormErrorMessage>
 								<HStack mt='0 !important'>
 									<Text {...helperTextStyles}>
 										Company name you have worked
@@ -119,9 +166,13 @@ function AddExperience() {
 									type='text'
 									name='company'
 									placeholder='Company Name'
+									value={experience.company}
 									onChange={handleOnChange}
+									errorBorderColor={company ? 'red.400' : 'grey.300'}
 								/>
-								<FormErrorMessage {...formErrorStyles}></FormErrorMessage>
+								<FormErrorMessage {...formErrorStyles}>
+									{company}
+								</FormErrorMessage>
 								<Text {...helperTextStyles}>
 									Company address or location you have worked
 								</Text>
@@ -130,25 +181,40 @@ function AddExperience() {
 									type='text'
 									name='location'
 									placeholder='Company Location'
+									value={experience.location}
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
-								<Text {...helperTextStyles}>Work period</Text>
+								<HStack mt='0 !important'>
+									<Text {...helperTextStyles}>Work period</Text>
+									<FaStarOfLife style={requiredStarStyles} />
+								</HStack>
 								<HStack mt='0 !important'>
 									<Input
 										{...inputStyles}
 										type='date'
 										name='from'
+										value={experience.from}
 										onChange={handleOnChange}
+										errorBorderColor={from ? 'red.400' : 'grey.300'}
 									/>
 									<Text fontSize='sm'>To</Text>
 									<Input
 										{...inputStyles}
 										type='date'
 										name='to'
+										isDisabled={experience.isCurrent}
+										value={experience.to}
 										onChange={handleOnChange}
+										errorBorderColor='grey.300'
 									/>
 								</HStack>
-								<Checkbox w='13rem'>
+								<FormErrorMessage {...formErrorStyles}>{from}</FormErrorMessage>
+								<Checkbox
+									w='13rem'
+									defaultIsChecked={experience.isCurrent}
+									onChange={handleOnCheckChange}
+								>
 									<Text fontSize='sm'>I'm currently working here</Text>
 								</Checkbox>
 								<Text {...helperTextStyles}>
@@ -159,22 +225,24 @@ function AddExperience() {
 									{...inputStyles}
 									name='description'
 									placeholder='Job Description'
+									value={experience.description}
 									onChange={handleOnChange}
+									errorBorderColor='grey.300'
 								/>
 							</Stack>
 						</FormControl>
 					</ModalBody>
 					<ModalFooter>
 						<Button
-							type='submit'
 							size='md'
 							width='180px'
 							ml='80px'
 							color={color.white}
-							bgColor={color.primaryColor}
+							bgColor={color.secondaryColor}
 							_hover={{ bg: color.primaryColor }}
 							_active={{ bg: color.primaryColor }}
 							leftIcon={<FaSave />}
+							onClick={handleExperienceSave}
 						>
 							Save Experience
 						</Button>
@@ -185,4 +253,18 @@ function AddExperience() {
 	);
 }
 
-export default AddExperience;
+AddExperience.propTypes = {
+	profile: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired,
+	addNewExperience: PropTypes.func.isRequired,
+	clearErrors: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	profile: state.profile,
+	errors: state.errors
+});
+
+const mapDispatchToProps = { addNewExperience, clearErrors };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExperience);

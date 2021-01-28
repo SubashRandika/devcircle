@@ -2,11 +2,11 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 import {
-	CLEAR_ERRORS,
 	GET_ERRORS,
 	SET_CURRENT_USER,
 	SET_USER_LOADING
 } from '../constants/types';
+import { clearErrors } from './errorActions';
 
 // Register user (SignUp user)
 export const registerUser = (userData, history) => (dispatch) => {
@@ -89,10 +89,4 @@ export const logoutUser = () => (dispatch) => {
 
 	// clear errors state
 	dispatch(clearErrors());
-};
-
-export const clearErrors = () => {
-	return {
-		type: CLEAR_ERRORS
-	};
 };

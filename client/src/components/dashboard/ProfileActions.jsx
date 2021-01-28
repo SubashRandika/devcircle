@@ -57,7 +57,7 @@ function ProfileActions({ name, profile, deleteAccount }) {
 					<AddExperience />
 					<Button
 						variant='outline'
-						colorScheme='teal'
+						colorScheme='blue'
 						leftIcon={<FaUserGraduate />}
 					>
 						Add Education

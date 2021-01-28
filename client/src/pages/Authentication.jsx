@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import SignIn from '../components/auth/SignIn';
 import SignUp from '../components/auth/SignUp';
 import Overlay from '../components/auth/Overlay';
-import { clearErrors } from '../redux/actions/authActions';
+import { clearErrors } from '../redux/actions/errorActions';
 
 const color = {
 	primaryColor: '#414f7a',
