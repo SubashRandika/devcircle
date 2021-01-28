@@ -235,7 +235,7 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 										})
 									}}
 									theme={selectCustomTheme}
-									onChange={handleStatusOnChange.bind(this)}
+									onChange={handleStatusOnChange}
 								/>
 							</Box>
 							<FormErrorMessage {...formErrorStyles}>{status}</FormErrorMessage>
@@ -330,7 +330,7 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 									}}
 									closeMenuOnSelect={false}
 									theme={selectCustomTheme}
-									onChange={handleSkillsOnChange.bind(this)}
+									onChange={handleSkillsOnChange}
 								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{skills}

@@ -20,15 +20,23 @@ import {
 	Textarea
 } from '@chakra-ui/react';
 import { FaSave, FaStarOfLife, FaUserTie } from 'react-icons/fa';
+import CreatableSelect from 'react-select/creatable';
 import { connect } from 'react-redux';
 import { addNewExperience } from '../../redux/actions/profileActions';
 import { clearErrors } from '../../redux/actions/errorActions';
+import statusList from '../../data/status';
 
 const color = {
 	primaryColor: '#414f7a',
 	secondaryColor: '#f06a63',
 	white: '#ffffff',
 	linkColor: '#008cdd',
+	primary25: '#e7f5ff',
+	primary: '#3182ce',
+	neutral20: '#E2E8F0',
+	neutral30: '#CBD5E0',
+	placeholderColor: '#A0AEC0',
+	selectOptionBorderBottom: '#f3f3f3',
 	onErrorBorder: '#F56565'
 };
 
@@ -58,6 +66,43 @@ const formErrorStyles = {
 	textAlign: 'left'
 };
 
+const statusSelectStyles = {
+	option: (provided, state) => ({
+		...provided,
+		fontSize: '0.875rem',
+		height: '1.8rem',
+		paddingTop: '0.25rem',
+		borderBottom: `1px solid ${color.selectOptionBorderBottom}`
+	}),
+	menu: (provided, state) => ({
+		...provided,
+		textAlign: 'left',
+		borderRadius: '0',
+		color: '#494949'
+	}),
+	placeholder: (base) => ({
+		...base,
+		fontSize: '1em',
+		color: `${color.placeholderColor}`,
+		fontWeight: 400,
+		paddingLeft: '0'
+	})
+};
+
+const selectCustomTheme = (theme) => {
+	return {
+		...theme,
+		borderRadius: '0.125rem',
+		colors: {
+			...theme.colors,
+			primary25: `${color.primary25}`,
+			primary: `${color.primary}`,
+			neutral20: `${color.neutral20}`,
+			neutral30: `${color.neutral30}`
+		}
+	};
+};
+
 function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 	const { title, company, from } = errors;
 	const initialRef = useRef();
@@ -82,6 +127,10 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 
 	const handleOnChange = (e) => {
 		setExperience({ ...experience, [e.target.name]: e.target.value });
+	};
+
+	const handleTitleChange = (e) => {
+		setExperience({ ...experience, title: e.label });
 	};
 
 	const handleOnCheckChange = (e) => {
@@ -146,17 +195,31 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 									<Text {...helperTextStyles}>Company offered job title</Text>
 									<FaStarOfLife style={requiredStarStyles} />
 								</HStack>
-								<Input
-									{...inputStyles}
-									type='text'
+								<CreatableSelect
 									name='title'
-									placeholder='Job Title'
+									placeholder={<Text>Select Professional Status</Text>}
+									options={statusList}
+									styles={{
+										...statusSelectStyles,
+										control: (provided, state) => ({
+											...provided,
+											borderColor: title
+												? `${color.onErrorBorder} !important`
+												: '#E2E8F0 !important',
+											boxShadow: title
+												? `0 0 0 1px ${color.onErrorBorder}`
+												: '',
+											minHeight: '2.5rem',
+											marginTop: '-0.75rem'
+										}),
+										valueContainer: (provided, state) => ({
+											...provided,
+											padding: '2px 14px'
+										})
+									}}
+									theme={selectCustomTheme}
+									onChange={handleTitleChange}
 									ref={initialRef}
-									value={experience.title}
-									onChange={handleOnChange}
-									errorBorderColor={
-										title ? `${color.onErrorBorder}` : 'grey.300'
-									}
 								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{title}
