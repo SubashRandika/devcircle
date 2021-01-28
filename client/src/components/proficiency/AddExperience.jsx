@@ -154,7 +154,9 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 									ref={initialRef}
 									value={experience.title}
 									onChange={handleOnChange}
-									errorBorderColor={title ? 'red.400' : 'grey.300'}
+									errorBorderColor={
+										title ? `${color.onErrorBorder}` : 'grey.300'
+									}
 								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{title}
@@ -172,7 +174,9 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 									placeholder='Company Name'
 									value={experience.company}
 									onChange={handleOnChange}
-									errorBorderColor={company ? 'red.400' : 'grey.300'}
+									errorBorderColor={
+										company ? `${color.onErrorBorder}` : 'grey.300'
+									}
 								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{company}
@@ -200,7 +204,9 @@ function AddExperience({ profile, errors, addNewExperience, clearErrors }) {
 										name='from'
 										value={experience.from}
 										onChange={handleOnChange}
-										errorBorderColor={from ? 'red.400' : 'grey.300'}
+										errorBorderColor={
+											from ? `${color.onErrorBorder}` : 'grey.300'
+										}
 									/>
 									<Text fontSize='sm'>To</Text>
 									<Input
