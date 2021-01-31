@@ -98,6 +98,21 @@ export const clearCurrentProfile = () => {
 	};
 };
 
+// delete a experience by experience id
+export const deleteExperience = (experienceId) => (dispatch) => {
+	axios
+		.delete(`/api/profile/experience/${experienceId}`)
+		.then((res) => {
+			dispatch(getCurrentProfile());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
 // delete entire user account with profile and logout the user
 export const deleteAccount = () => (dispatch) => {
 	axios

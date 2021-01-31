@@ -9,6 +9,7 @@ import {
 import NoProfile from './NoProfile';
 import ProfileActions from './ProfileActions';
 import Loading from '../common/Loading';
+import ExperienceHistory from './ExperienceHistory';
 
 const color = {
 	primaryColor: '#414f7a'
@@ -32,11 +33,14 @@ function Dashboard({ auth, profile, getCurrentProfile, deleteAccount }) {
 	} else {
 		if (currentProfile && Object.keys(currentProfile).length > 0) {
 			dashboardContent = (
-				<ProfileActions
-					name={user.name}
-					profile={currentProfile}
-					deleteAccount={handleDeleteAccount}
-				/>
+				<React.Fragment>
+					<ProfileActions
+						name={user.name}
+						profile={currentProfile}
+						deleteAccount={handleDeleteAccount}
+					/>
+					<ExperienceHistory experiences={currentProfile.experience} />
+				</React.Fragment>
 			);
 		} else {
 			dashboardContent = <NoProfile name={user.name} />;
