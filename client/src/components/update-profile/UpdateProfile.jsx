@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
 	Flex,
 	Stack,
@@ -525,11 +525,14 @@ function UpdateProfile({
 									</InputGroup>
 								</Stack>
 								<Flex d='flex' justify='flex-end'>
+									<Link to='/dashboard'>
+										<Button w='7.5rem'>Cancel</Button>
+									</Link>
 									<Button
 										type='submit'
 										size='md'
-										width='180px'
-										ml='80px'
+										width='11.25rem'
+										ml='1.125rem'
 										color={color.white}
 										bgColor={color.secondaryColor}
 										_hover={{ bg: color.primaryColor }}
