@@ -113,6 +113,21 @@ export const deleteExperience = (experienceId) => (dispatch) => {
 		});
 };
 
+// delete a education by education id
+export const deleteEducation = (educationId) => (dispatch) => {
+	axios
+		.delete(`/api/profile/education/${educationId}`)
+		.then((res) => {
+			dispatch(getCurrentProfile());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
 // delete entire user account with profile and logout the user
 export const deleteAccount = () => (dispatch) => {
 	axios

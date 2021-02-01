@@ -10,6 +10,7 @@ import NoProfile from './NoProfile';
 import ProfileActions from './ProfileActions';
 import Loading from '../common/Loading';
 import ExperienceHistory from './ExperienceHistory';
+import EducationHistory from './EducationHistory';
 
 const color = {
 	primaryColor: '#414f7a'
@@ -40,6 +41,7 @@ function Dashboard({ auth, profile, getCurrentProfile, deleteAccount }) {
 						deleteAccount={handleDeleteAccount}
 					/>
 					<ExperienceHistory experiences={currentProfile.experience} />
+					<EducationHistory educations={currentProfile.education} />
 				</React.Fragment>
 			);
 		} else {

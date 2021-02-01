@@ -23,34 +23,34 @@ import {
 import { FaTrashAlt } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import { connect } from 'react-redux';
-import { deleteExperience } from '../../redux/actions/profileActions';
+import { deleteEducation } from '../../redux/actions/profileActions';
 import NoData from './NoData';
 
 const color = {
 	subtitle: '#7d848c'
 };
 
-function ExperienceHistory({ experiences, deleteExperience }) {
+function EducationHistory({ educations, deleteEducation }) {
 	const dateFormat = 'DD/MM/YYYY';
-	const sortedExperiences = experiences.sort(
-		(exp1, exp2) => new Date(exp2.from) - new Date(exp1.from)
+	const sortedEducations = educations.sort(
+		(edu1, edu2) => new Date(edu2.from) - new Date(edu1.from)
 	);
 	const [isOpen, setIsOpen] = useState(false);
-	const [currentExpToDelete, setCurrentExpToDelete] = useState({
+	const [currentEduToDelete, setCurrentEduToDelete] = useState({
 		id: '',
-		title: ''
+		school: ''
 	});
 	const onClose = () => setIsOpen(false);
 	const cancelRef = useRef();
 
-	const handleDeleteExperience = (expId) => {
-		deleteExperience(expId);
+	const handleDeleteEducation = (eduId) => {
+		deleteEducation(eduId);
 	};
 
 	return (
 		<Box m='2rem 4rem'>
 			<Heading as='h2' size='lg'>
-				Experience History
+				Education History
 			</Heading>
 			<Divider />
 			<AlertDialog
@@ -63,11 +63,11 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 				<AlertDialogOverlay>
 					<AlertDialogContent>
 						<AlertDialogHeader fontSize='xl' fontWeight='bold'>
-							Delete Experience
+							Delete Education
 						</AlertDialogHeader>
 						<AlertDialogBody>
 							<Text mt='-1rem' mb='0.6rem' color='red.400'>
-								{currentExpToDelete.title}
+								{currentEduToDelete.school}
 							</Text>
 							Are you sure, do you want to delete? You can't undo this once
 							deleted.
@@ -78,7 +78,7 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 							</Button>
 							<Button
 								colorScheme='red'
-								onClick={() => handleDeleteExperience(currentExpToDelete.id)}
+								onClick={() => handleDeleteEducation(currentEduToDelete.id)}
 								ml={3}
 							>
 								Delete
@@ -87,21 +87,21 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 					</AlertDialogContent>
 				</AlertDialogOverlay>
 			</AlertDialog>
-			{sortedExperiences.length > 0 ? (
+			{sortedEducations.length > 0 ? (
 				<Wrap mt='1.8rem' spacing='2rem'>
-					{sortedExperiences.map((experience) => {
-						const fromDate = dayjs(experience.from).format(dateFormat);
-						const toDate = experience.to
-							? dayjs(experience.to).format(dateFormat)
+					{sortedEducations.map((education) => {
+						const fromDate = dayjs(education.from).format(dateFormat);
+						const toDate = education.to
+							? dayjs(education.to).format(dateFormat)
 							: 'Now';
 
-						const duration = experience.to
-							? dayjs(experience.to).diff(dayjs(experience.from), 'M')
-							: dayjs().diff(dayjs(experience.from), 'M');
+						const duration = education.to
+							? dayjs(education.to).diff(dayjs(education.from), 'M')
+							: dayjs().diff(dayjs(education.from), 'M');
 
 						return (
 							<WrapItem
-								key={experience._id}
+								key={education._id}
 								w='29rem'
 								shadow='sm'
 								borderWidth='0.063rem'
@@ -109,34 +109,36 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 								mt='0'
 							>
 								<Flex justify='space-between' flex='1'>
-									<VStack align='stretch' spacing={0} w='100%'>
+									<VStack align='stretch' spacing={0}>
 										<Heading fontSize='lg' lineHeight='2rem'>
-											{experience.title}
+											{education.school}
 										</Heading>
-										<Text>{experience.company}</Text>
-										<HStack spacing='2.9rem'>
+										<Text>
+											{education.degree} in {education.fieldofstudy}
+										</Text>
+										<HStack spacing='2.5rem'>
 											<Text color={`${color.subtitle}`} fontSize='0.9rem'>
 												{fromDate} - {toDate}
 											</Text>
 											<Badge
 												variant='subtle'
-												colorScheme='blue'
+												colorScheme='cyan'
 												fontSize='0.9rem'
-											>{`${(duration / 12).toFixed(1)} Years`}</Badge>
+											>{`${Math.floor(duration / 12)} Years`}</Badge>
 										</HStack>
 									</VStack>
 									<IconButton
 										variant='outline'
 										colorScheme='red'
-										aria-label='Delete Experience'
+										aria-label='Delete Education'
 										fontSize='1.25rem'
 										float='right'
 										mt='1.7rem'
 										icon={<FaTrashAlt />}
 										onClick={() => {
-											setCurrentExpToDelete({
-												id: experience._id,
-												title: experience.title
+											setCurrentEduToDelete({
+												id: education._id,
+												school: education.school
 											});
 											setIsOpen(true);
 										}}
@@ -148,19 +150,19 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 				</Wrap>
 			) : (
 				<NoData
-					heading='No Experience Data'
-					subtitle='Please add your latest experience to list here'
+					heading='No Education Data'
+					subtitle='Please add your latest education to list here'
 				/>
 			)}
 		</Box>
 	);
 }
 
-ExperienceHistory.propTypes = {
-	experiences: PropTypes.arrayOf(PropTypes.object).isRequired,
-	deleteExperience: PropTypes.func.isRequired
+EducationHistory.propTypes = {
+	educations: PropTypes.arrayOf(PropTypes.object).isRequired,
+	deleteEducation: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = { deleteExperience };
+const mapDispatchToProps = { deleteEducation };
 
-export default connect(null, mapDispatchToProps)(ExperienceHistory);
+export default connect(null, mapDispatchToProps)(EducationHistory);
