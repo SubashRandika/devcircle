@@ -69,7 +69,7 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 							<Text mt='-1rem' mb='0.6rem' color='red.400'>
 								{currentExpToDelete.title}
 							</Text>
-							Are you sure, Do you want to delete? You can't undo this once
+							Are you sure, do you want to delete? You can't undo this once
 							deleted.
 						</AlertDialogBody>
 						<AlertDialogFooter>
