@@ -28,6 +28,7 @@ export const getCurrentProfile = () => (dispatch) => {
 				type: GET_PROFILE,
 				payload: res.data
 			});
+			dispatch(clearErrors());
 		})
 		.catch((err) => {
 			dispatch(setProfileLoading(false));

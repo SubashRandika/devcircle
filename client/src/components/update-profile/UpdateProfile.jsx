@@ -261,6 +261,7 @@ function UpdateProfile({
 									value={profileInfo.handle || ''}
 									placeholder='Profile Handle'
 									onChange={handleOnChange}
+									errorBorderColor={handle ? 'red.400' : 'none'}
 								/>
 								<FormErrorMessage {...formErrorStyles}>
 									{handle}
