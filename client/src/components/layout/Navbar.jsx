@@ -21,7 +21,7 @@ const color = {
 
 function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 	const history = useHistory();
-	const { user } = auth;
+	const { user, isAuthenticated } = auth;
 
 	const handleLogout = (e) => {
 		e.preventDefault();
@@ -35,15 +35,21 @@ function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 	return (
 		<Flex as='nav' padding='1.2rem 12rem' bg='gray.50' boxShadow='xs'>
 			<Stack direction='row' spacing={12}>
-				<Link to='/dashboard'>
+				<Link to={isAuthenticated ? '/dashboard' : '/'}>
 					<Logo {...logoText} />
 				</Link>
-				<Button colorScheme='blue' variant='ghost' fontSize='20px'>
-					Developers
-				</Button>
+				<Link to='/profiles'>
+					<Button colorScheme='blue' variant='ghost' fontSize='20px'>
+						Developers
+					</Button>
+				</Link>
 			</Stack>
-			<Spacer />
-			<Stack direction='row' spacing={6}>
+			<Spacer display={isAuthenticated ? 'block' : 'none'} />
+			<Stack
+				direction='row'
+				spacing={6}
+				display={isAuthenticated ? 'block' : 'none'}
+			>
 				<Tooltip
 					hasArrow
 					placement='bottom'
