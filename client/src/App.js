@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Container } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
@@ -16,7 +16,6 @@ import Dashboard from './components/dashboard/Dashboard';
 import Content from './components/layout/Content';
 import CreateProfile from './components/create-profile/CreateProfile';
 import UpdateProfile from './components/update-profile/UpdateProfile';
-import Profiles from './components/profile/Profiles';
 
 const store = configureStore();
 
@@ -61,12 +60,6 @@ function App() {
 					<PublicRoute exact path='/signup'>
 						<Authentication signup={true} />
 					</PublicRoute>
-					<Route exact path='/profiles'>
-						<Navbar />
-						<Content maxW='1530px' mt='30px' p='0'>
-							<Profiles />
-						</Content>
-					</Route>
 					<PrivateRoute exact path='/dashboard'>
 						<Navbar />
 						<Content>

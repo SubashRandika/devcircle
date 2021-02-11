@@ -49,16 +49,14 @@ function Landing() {
 				<Spacer />
 				<center>
 					<Box>
-						<Link to='/profiles'>
-							<Button
-								{...buttonStyles}
-								borderColor={color.secondaryColor}
-								_hover={{ bg: color.secondaryColor }}
-								_active={{ bg: color.secondaryColor }}
-							>
-								Checkout Developers
-							</Button>
-						</Link>
+						<Button
+							{...buttonStyles}
+							borderColor={color.secondaryColor}
+							_hover={{ bg: color.secondaryColor }}
+							_active={{ bg: color.secondaryColor }}
+						>
+							Checkout Developers
+						</Button>
 					</Box>
 				</center>
 			</Flex>
