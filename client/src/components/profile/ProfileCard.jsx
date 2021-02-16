@@ -29,7 +29,6 @@ function ProfileCard({ profile }) {
 		<WrapItem>
 			<Box
 				w='30rem'
-				h='20rem'
 				borderWidth='1px'
 				borderRadius='sm'
 				p='1rem'
@@ -72,6 +71,7 @@ function ProfileCard({ profile }) {
 									fontSize='0.9rem'
 									bg={color.primaryColor}
 									color={color.white}
+									p='0.1rem 0.9rem'
 								>
 									{skill}
 								</Badge>

@@ -21,7 +21,8 @@ const profileReducer = (state = initialState, action) => {
 		case GET_PROFILE:
 			return {
 				...state,
-				currentProfile: action.payload
+				currentProfile: action.payload,
+				loading: false
 			};
 		case GET_ALL_PROFILES:
 			return {

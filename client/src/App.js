@@ -17,6 +17,7 @@ import Content from './components/layout/Content';
 import CreateProfile from './components/create-profile/CreateProfile';
 import UpdateProfile from './components/update-profile/UpdateProfile';
 import Profiles from './components/profile/Profiles';
+import Profile from './components/profile-info/Profile';
 
 const store = configureStore();
 
@@ -51,7 +52,7 @@ function App() {
 			<Router>
 				<Switch>
 					<PublicRoute exact path='/'>
-						<Container className='main_app' maxW='1650px'>
+						<Container className='main_app' maxW='103.125rem'>
 							<Landing />
 						</Container>
 					</PublicRoute>
@@ -63,8 +64,14 @@ function App() {
 					</PublicRoute>
 					<Route exact path='/profiles'>
 						<Navbar />
-						<Content maxW='1530px' mt='30px' p='0'>
+						<Content maxW='95.625rem' mt='1.875rem' p='0'>
 							<Profiles />
+						</Content>
+					</Route>
+					<Route exact path='/profile/:handle'>
+						<Navbar />
+						<Content maxW='95.625rem' mt='1.875rem' p='0'>
+							<Profile />
 						</Content>
 					</Route>
 					<PrivateRoute exact path='/dashboard'>
@@ -75,13 +82,13 @@ function App() {
 					</PrivateRoute>
 					<PrivateRoute exact path='/create-profile'>
 						<Navbar />
-						<Container maxW='1530px' mt='30px' p='0'>
+						<Container maxW='95.625rem' mt='1.875rem' p='0'>
 							<CreateProfile />
 						</Container>
 					</PrivateRoute>
 					<PrivateRoute exact path='/update-profile'>
 						<Navbar />
-						<Container maxW='1530px' mt='30px' p='0'>
+						<Container maxW='95.625rem' mt='1.875rem' p='0'>
 							<UpdateProfile />
 						</Container>
 					</PrivateRoute>

@@ -24,7 +24,6 @@ export const getCurrentProfile = () => (dispatch) => {
 	axios
 		.get('/api/profile')
 		.then((res) => {
-			dispatch(setProfileLoading(false));
 			dispatch({
 				type: GET_PROFILE,
 				payload: res.data
@@ -32,7 +31,6 @@ export const getCurrentProfile = () => (dispatch) => {
 			dispatch(clearErrors());
 		})
 		.catch((err) => {
-			dispatch(setProfileLoading(false));
 			dispatch({
 				type: GET_PROFILE,
 				payload: {}
@@ -56,6 +54,27 @@ export const getAllProfiles = () => (dispatch) => {
 			dispatch({
 				type: GET_ALL_PROFILES,
 				payload: null
+			});
+		});
+};
+
+// get profile information by user handle
+export const getProfileByHandle = (handle) => (dispatch) => {
+	dispatch(setProfileLoading(true));
+
+	axios
+		.get(`/api/profile/handle/${handle}`)
+		.then((res) => {
+			dispatch({
+				type: GET_PROFILE,
+				payload: res.data
+			});
+			dispatch(clearErrors());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_PROFILE,
+				payload: {}
 			});
 		});
 };
