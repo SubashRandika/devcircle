@@ -25,6 +25,7 @@ import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 import { deleteEducation } from '../../redux/actions/profileActions';
 import NoData from './NoData';
+import sortByLatestDate from '../../utils/sortByLatestDate';
 
 const color = {
 	subtitle: '#7d848c'
@@ -32,9 +33,7 @@ const color = {
 
 function EducationHistory({ educations, deleteEducation }) {
 	const dateFormat = 'DD/MM/YYYY';
-	const sortedEducations = educations.sort(
-		(edu1, edu2) => new Date(edu2.from) - new Date(edu1.from)
-	);
+	const sortedEducations = sortByLatestDate(educations);
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentEduToDelete, setCurrentEduToDelete] = useState({
 		id: '',

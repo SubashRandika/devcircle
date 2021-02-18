@@ -1,0 +1,13 @@
+.timeline__wrapper {
+	padding-top: 0;
+	width: 96% !important;
+	margin: 0 1.3rem;
+}
+
+.timeline__wrapper::before {
+	background: linear-gradient(
+		180deg,
+		rgba(65, 79, 122, 1) 60%,
+		rgba(240, 106, 99, 1) 100%
+	);
+}

@@ -25,6 +25,7 @@ import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 import { deleteExperience } from '../../redux/actions/profileActions';
 import NoData from './NoData';
+import sortByLatestDate from '../../utils/sortByLatestDate';
 
 const color = {
 	subtitle: '#7d848c'
@@ -32,9 +33,7 @@ const color = {
 
 function ExperienceHistory({ experiences, deleteExperience }) {
 	const dateFormat = 'DD/MM/YYYY';
-	const sortedExperiences = experiences.sort(
-		(exp1, exp2) => new Date(exp2.from) - new Date(exp1.from)
-	);
+	const sortedExperiences = sortByLatestDate(experiences);
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentExpToDelete, setCurrentExpToDelete] = useState({
 		id: '',

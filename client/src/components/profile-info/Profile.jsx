@@ -7,6 +7,7 @@ import { getProfileByHandle } from '../../redux/actions/profileActions';
 import ProfileInfoCard from './ProfileInfoCard';
 import Loading from '../common/Loading';
 import BioSkillsCard from './BioSkillsCard';
+import ProficiencyTimeline from './ProficiencyTimeline';
 
 const color = {
 	primaryColor: '#414f7a'
@@ -36,9 +37,12 @@ function Profile({ profile, getProfileByHandle }) {
 						/>
 					</Flex>
 					<Box flex='1'>
-						<Text>Box 2</Text>
+						<ProficiencyTimeline
+							experience={currentProfile.experience}
+							education={currentProfile.education}
+						/>
 					</Box>
-					<Box w='25rem'>
+					<Box w='20rem'>
 						<Text>Box 3</Text>
 					</Box>
 				</React.Fragment>
@@ -47,7 +51,7 @@ function Profile({ profile, getProfileByHandle }) {
 	}
 
 	return (
-		<Flex m='0 4.063rem' justify='center'>
+		<Flex m='0 -2.5rem' justify='center'>
 			{profileContent}
 		</Flex>
 	);

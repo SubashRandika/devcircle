@@ -26,7 +26,7 @@ function BioSkillsCard({ name, bio, skills }) {
 			bg={color.cardBg}
 			boxShadow='xs'
 		>
-			<Heading as='h2' size='md' alignSelf='center' mt='1rem'>{`${
+			<Heading as='h2' size='md' alignSelf='center' mt='0.5rem'>{`${
 				name.split(' ')[0]
 			}'s Bio`}</Heading>
 			<Text fontSize='md' p='1.2rem 0' textAlign='center'>
