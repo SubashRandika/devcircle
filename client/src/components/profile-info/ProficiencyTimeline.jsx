@@ -36,7 +36,8 @@ function ProficiencyTimeline({ experience, education }) {
 					contentStyle={{
 						background: `${color.expCardBg}`,
 						color: `${color.textColor}`,
-						padding: '1.1rem'
+						padding: '1.1rem',
+						boxShadow: `0 3px 0 ${color.primaryColor}`
 					}}
 					contentArrowStyle={{ borderRight: `7px solid ${color.expCardBg}` }}
 					iconStyle={{
@@ -82,7 +83,8 @@ function ProficiencyTimeline({ experience, education }) {
 					contentStyle={{
 						background: `${color.eduCardBg}`,
 						color: `${color.textColor}`,
-						padding: '1.1rem'
+						padding: '1.1rem',
+						boxShadow: `0 3px 0 ${color.secondaryColor}`
 					}}
 					contentArrowStyle={{ borderRight: `7px solid ${color.eduCardBg}` }}
 					iconStyle={{
