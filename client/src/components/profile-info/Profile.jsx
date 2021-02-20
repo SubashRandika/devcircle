@@ -8,6 +8,7 @@ import ProfileInfoCard from './ProfileInfoCard';
 import Loading from '../common/Loading';
 import BioSkillsCard from './BioSkillsCard';
 import ProficiencyTimeline from './ProficiencyTimeline';
+import GitHubReposCard from './GitHubReposCard';
 
 const color = {
 	primaryColor: '#414f7a'
@@ -43,7 +44,7 @@ function Profile({ profile, getProfileByHandle }) {
 						/>
 					</Box>
 					<Box w='20rem'>
-						<Text>Box 3</Text>
+						<GitHubReposCard username={currentProfile.githubusername} />
 					</Box>
 				</React.Fragment>
 			);
