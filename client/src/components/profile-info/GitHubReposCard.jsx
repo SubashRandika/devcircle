@@ -24,10 +24,8 @@ const color = {
 
 function GitHubReposCard({ username }) {
 	const [gitHubInfo, setGitHubInfo] = useState({
-		clientId: process.env.REACT_APP_GH_CLIENT_ID,
-		clientSecret: process.env.REACT_APP_GH_CLIENT_SECRET,
 		repoCount: 5,
-		sortBy: 'created: asc',
+		sortBy: 'created:asc',
 		repositories: [],
 		loading: true
 	});
@@ -36,8 +34,12 @@ function GitHubReposCard({ username }) {
 		if (username) {
 			axios
 				.get(
-					`https://api.github.com/users/${username}/repos?per_page=${gitHubInfo.repoCount}&sort=${gitHubInfo.sortBy}
-             &client_id=${gitHubInfo.clientId}&client_secret=${gitHubInfo.clientSecret}`
+					`https://api.github.com/users/${username}/repos?per_page=${gitHubInfo.repoCount}&sort=${gitHubInfo.sortBy}`,
+					{
+						headers: {
+							Authorization: `${process.env.REACT_APP_GITHUB_TOKEN}`
+						}
+					}
 				)
 				.then((res) => {
 					setGitHubInfo({
