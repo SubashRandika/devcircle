@@ -1,12 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, Link } from 'react-router-dom';
-import { Flex, Spacer, Avatar, Stack, Button, Tooltip } from '@chakra-ui/react';
+import {
+	Flex,
+	Spacer,
+	Avatar,
+	Stack,
+	Button,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem
+} from '@chakra-ui/react';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import Logo from '../common/Logo';
 import { logoutUser } from '../../redux/actions/authActions';
-import { clearCurrentProfile } from '../../redux/actions/profileActions';
+import {
+	clearCurrentProfile,
+	getProfileByUserId
+} from '../../redux/actions/profileActions';
 
 const logoText = {
 	fontWeight: '800',
@@ -19,7 +32,7 @@ const color = {
 	white: '#ffffff'
 };
 
-function Navbar({ logoutUser, clearCurrentProfile, auth }) {
+function Navbar({ logoutUser, clearCurrentProfile, getProfileByUserId, auth }) {
 	const history = useHistory();
 	const { user, isAuthenticated } = auth;
 
@@ -30,6 +43,10 @@ function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 		logoutUser();
 
 		history.push('/signin');
+	};
+
+	const handleShowProfile = () => {
+		getProfileByUserId(user.id, history);
 	};
 
 	return (
@@ -50,21 +67,23 @@ function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 				spacing={6}
 				display={isAuthenticated ? 'block' : 'none'}
 			>
-				<Tooltip
-					hasArrow
-					placement='bottom'
-					label='Go to your profile'
-					aria-label='Navbar Avatar Tooltip'
-				>
-					<Avatar
+				<Menu isLazy placement='bottom-end'>
+					<MenuButton
+						as={Avatar}
 						w='2.6rem'
 						h='2.6rem'
 						cursor='pointer'
 						loading='eager'
 						name={user.name}
 						src={user.avatar}
-					/>
-				</Tooltip>
+					></MenuButton>
+					<MenuList>
+						<MenuItem onClick={handleShowProfile}>See Profile</MenuItem>
+						<Link to='/dashboard'>
+							<MenuItem>Dashboard</MenuItem>
+						</Link>
+					</MenuList>
+				</Menu>
 				<Button
 					borderRadius='20px'
 					border={`1px solid ${color.primaryColor}`}
@@ -90,6 +109,7 @@ function Navbar({ logoutUser, clearCurrentProfile, auth }) {
 Navbar.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
 	clearCurrentProfile: PropTypes.func.isRequired,
+	getProfileByUserId: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
 };
 
@@ -97,6 +117,10 @@ const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 
-const mapDispatchToProps = { logoutUser, clearCurrentProfile };
+const mapDispatchToProps = {
+	logoutUser,
+	clearCurrentProfile,
+	getProfileByUserId
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

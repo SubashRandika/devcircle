@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
@@ -23,6 +23,7 @@ const color = {
 };
 
 function GitHubReposCard({ username }) {
+	const githubRef = useRef(null);
 	const [gitHubInfo, setGitHubInfo] = useState({
 		repoCount: 5,
 		sortBy: 'created:asc',
@@ -42,17 +43,21 @@ function GitHubReposCard({ username }) {
 					}
 				)
 				.then((res) => {
-					setGitHubInfo({
-						...gitHubInfo,
-						repositories: res.data,
-						loading: false
-					});
+					if (githubRef.current) {
+						setGitHubInfo({
+							...gitHubInfo,
+							repositories: res.data,
+							loading: false
+						});
+					}
 				})
 				.catch((err) => {
-					setGitHubInfo({
-						...gitHubInfo,
-						loading: false
-					});
+					if (githubRef.current) {
+						setGitHubInfo({
+							...gitHubInfo,
+							loading: false
+						});
+					}
 					console.error(`Unable to fetch GitHub repositories due to: ${err}`);
 				});
 		}
@@ -65,6 +70,7 @@ function GitHubReposCard({ username }) {
 			p='1rem'
 			bg={color.cardBg}
 			boxShadow='xs'
+			ref={githubRef}
 		>
 			{gitHubInfo.loading ? (
 				<VStack>

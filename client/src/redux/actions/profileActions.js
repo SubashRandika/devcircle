@@ -79,6 +79,22 @@ export const getProfileByHandle = (handle) => (dispatch) => {
 		});
 };
 
+// get profile information by user id
+export const getProfileByUserId = (userId, history) => (dispatch) => {
+	axios
+		.get(`/api/profile/user/${userId}`)
+		.then((res) => {
+			getProfileByHandle(res.data.handle);
+			history.push(`/profile/${res.data.handle}`);
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_PROFILE,
+				payload: {}
+			});
+		});
+};
+
 // create or update profile details
 export const createUpdateProfile = (profileInfo, history) => (dispatch) => {
 	dispatch(setProfileLoading(true));

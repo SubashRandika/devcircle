@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileByHandle } from '../../redux/actions/profileActions';
