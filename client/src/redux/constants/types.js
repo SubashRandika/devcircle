@@ -12,3 +12,10 @@ export const GET_ALL_PROFILES = 'GET_ALL_PROFILES';
 export const PROFILE_LOADING = 'PROFILE_LOADING';
 export const PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND';
 export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
+
+// post types
+export const CREATE_POST = 'CREATE_POST';
+export const POST_LOADING = 'POST_LOADING';
+export const GET_A_POST = 'GET_A_POST';
+export const GET_ALL_POSTS = 'GET_ALL_POSTS';
+export const REMOVE_POST = 'REMOVE_POST';
