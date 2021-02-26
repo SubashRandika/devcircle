@@ -16,6 +16,7 @@ import {
 	HStack,
 	IconButton,
 	Text,
+	Tooltip,
 	VStack,
 	Wrap,
 	WrapItem
@@ -124,22 +125,24 @@ function ExperienceHistory({ experiences, deleteExperience }) {
 											>{`${(duration / 12).toFixed(1)} Years`}</Badge>
 										</HStack>
 									</VStack>
-									<IconButton
-										variant='outline'
-										colorScheme='red'
-										aria-label='Delete Experience'
-										fontSize='1.25rem'
-										float='right'
-										mt='1.7rem'
-										icon={<FaTrashAlt />}
-										onClick={() => {
-											setCurrentExpToDelete({
-												id: experience._id,
-												title: experience.title
-											});
-											setIsOpen(true);
-										}}
-									/>
+									<Tooltip hasArrow label='Delete Experience'>
+										<IconButton
+											variant='outline'
+											colorScheme='red'
+											aria-label='Delete Experience'
+											fontSize='1.25rem'
+											float='right'
+											mt='1.7rem'
+											icon={<FaTrashAlt />}
+											onClick={() => {
+												setCurrentExpToDelete({
+													id: experience._id,
+													title: experience.title
+												});
+												setIsOpen(true);
+											}}
+										/>
+									</Tooltip>
 								</Flex>
 							</WrapItem>
 						);

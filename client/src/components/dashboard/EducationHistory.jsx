@@ -16,6 +16,7 @@ import {
 	HStack,
 	IconButton,
 	Text,
+	Tooltip,
 	VStack,
 	Wrap,
 	WrapItem
@@ -126,22 +127,24 @@ function EducationHistory({ educations, deleteEducation }) {
 											>{`${Math.floor(duration / 12)} Years`}</Badge>
 										</HStack>
 									</VStack>
-									<IconButton
-										variant='outline'
-										colorScheme='red'
-										aria-label='Delete Education'
-										fontSize='1.25rem'
-										float='right'
-										mt='1.7rem'
-										icon={<FaTrashAlt />}
-										onClick={() => {
-											setCurrentEduToDelete({
-												id: education._id,
-												school: education.school
-											});
-											setIsOpen(true);
-										}}
-									/>
+									<Tooltip hasArrow label='Delete Education'>
+										<IconButton
+											variant='outline'
+											colorScheme='red'
+											aria-label='Delete Education'
+											fontSize='1.25rem'
+											float='right'
+											mt='1.7rem'
+											icon={<FaTrashAlt />}
+											onClick={() => {
+												setCurrentEduToDelete({
+													id: education._id,
+													school: education.school
+												});
+												setIsOpen(true);
+											}}
+										/>
+									</Tooltip>
 								</Flex>
 							</WrapItem>
 						);
