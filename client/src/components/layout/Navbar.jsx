@@ -64,10 +64,10 @@ function Navbar({ logoutUser, clearCurrentProfile, getProfileByUserId, auth }) {
 			<Spacer display={isAuthenticated ? 'block' : 'none'} />
 			<Stack
 				direction='row'
-				spacing={6}
+				spacing={0}
 				display={isAuthenticated ? 'block' : 'none'}
 			>
-				<Menu isLazy placement='bottom-end'>
+				<Menu isLazy placement='bottom-end' offset={[0, 1]}>
 					<MenuButton
 						as={Avatar}
 						w='2.6rem'
@@ -90,6 +90,7 @@ function Navbar({ logoutUser, clearCurrentProfile, getProfileByUserId, auth }) {
 					bgColor={color.primaryColor}
 					color={color.white}
 					fontWeight='bold'
+					ml='1.5rem !important'
 					p='12px 30px'
 					letterSpacing='1px'
 					lineHeight='unset'
