@@ -18,6 +18,7 @@ import CreateProfile from './components/create-profile/CreateProfile';
 import UpdateProfile from './components/update-profile/UpdateProfile';
 import Profiles from './components/profile/Profiles';
 import Profile from './components/profile-info/Profile';
+import PostFeed from './components/posts/PostFeed';
 
 const store = configureStore();
 
@@ -90,6 +91,12 @@ function App() {
 						<Navbar />
 						<Container maxW='95.625rem' mt='1.875rem' p='0'>
 							<UpdateProfile />
+						</Container>
+					</PrivateRoute>
+					<PrivateRoute exact path='/feeds'>
+						<Navbar />
+						<Container maxW='95.625rem' mt='1.875rem' p='0'>
+							<PostFeed />
 						</Container>
 					</PrivateRoute>
 				</Switch>

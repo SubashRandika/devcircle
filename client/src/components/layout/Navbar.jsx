@@ -60,6 +60,16 @@ function Navbar({ logoutUser, clearCurrentProfile, getProfileByUserId, auth }) {
 						Developers
 					</Button>
 				</Link>
+				<Link to='/feeds'>
+					<Button
+						colorScheme='blue'
+						variant='ghost'
+						fontSize='20px'
+						display={isAuthenticated ? 'block' : 'none'}
+					>
+						Feeds
+					</Button>
+				</Link>
 			</Stack>
 			<Spacer display={isAuthenticated ? 'block' : 'none'} />
 			<Stack
