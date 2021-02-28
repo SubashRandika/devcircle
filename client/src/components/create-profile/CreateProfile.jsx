@@ -466,8 +466,8 @@ function CreateProfile({ profile, errors, createUpdateProfile }) {
 								<Button
 									type='submit'
 									size='md'
-									width='180px'
-									ml='80px'
+									width='11.25rem'
+									ml='5rem'
 									color={color.white}
 									bgColor={color.secondaryColor}
 									_hover={{ bg: color.primaryColor }}
