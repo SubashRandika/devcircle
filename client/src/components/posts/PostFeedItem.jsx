@@ -168,10 +168,12 @@ function PostFeedItem() {
 									</Flex>
 									<Box>
 										<Collapse startingHeight={20} in={showCommentText}>
-											Anim pariatur cliche reprehenderit, enim eiusmod high life
-											accusamus terry richardson ad squid. Nihil anim keffiyeh
-											helvetica, craft beer labore wes anderson cred nesciunt
-											sapiente ea proident.
+											<Text fontSize='0.9rem'>
+												Anim pariatur cliche reprehenderit, enim eiusmod high
+												life accusamus terry richardson ad squid. Nihil anim
+												keffiyeh helvetica, craft beer labore wes anderson cred
+												nesciunt sapiente ea proident. lorem
+											</Text>
 										</Collapse>
 										<Button
 											fontSize='0.8rem'
