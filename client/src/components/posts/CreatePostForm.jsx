@@ -80,7 +80,7 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 				isInvalid={Object.keys(errors).length !== 0}
 			>
 				<Flex direction='column'>
-					<Heading as='h2' size='md'>
+					<Heading as='h2' size='md' mb='1rem'>
 						Write something here...
 					</Heading>
 					<InputGroup>
