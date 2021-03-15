@@ -8,9 +8,8 @@ const validatePostInput = (data) => {
 
 	if (Validator.isEmpty(data.text)) {
 		errors.text = 'Text field is required';
-	} else if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-		errors.text =
-			'Text must be at least 10 characters and less than 300 characters';
+	} else if (!Validator.isLength(data.text, { min: 10 })) {
+		errors.text = 'Text must be at least 10 characters';
 	}
 
 	return {
