@@ -14,26 +14,8 @@ router.get(
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		Post.find()
-			.populate({
-				path: 'user',
-				select: ['name', 'avatar'],
-				model: User
-			})
 			.sort({ date: -1 })
-			.then((posts) => {
-				const postsWithCounts = posts.map((post) => {
-					return {
-						_id: post._id,
-						text: post.text,
-						user: post.user,
-						likes: post.likes.length,
-						comments: post.comments.length,
-						date: post.date
-					};
-				});
-
-				return res.status(200).json(postsWithCounts);
-			})
+			.then((posts) => res.status(200).json(posts))
 			.catch((err) => res.status(404).json({ posts: 'Cannot fetch posts' }));
 	}
 );

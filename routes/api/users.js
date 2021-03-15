@@ -3,11 +3,13 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const privateKey = require('../../config/keys').privateKey;
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 // load user model
 const User = require('../../models/User');
+
+require('dotenv').config();
+const privateKey = process.env.JWT_SECRET;
 
 const router = express.Router();
 
