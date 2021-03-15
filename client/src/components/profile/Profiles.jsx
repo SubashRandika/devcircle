@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getAllProfiles } from '../../redux/actions/profileActions';
 import ProfileCard from './ProfileCard';
 import Loading from '../common/Loading';
-import NoData from '../dashboard/NoData';
+import NoData from '../common/NoData';
 
 const color = {
 	primaryColor: '#414f7a'

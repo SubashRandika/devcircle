@@ -25,7 +25,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 import { deleteEducation } from '../../redux/actions/profileActions';
-import NoData from './NoData';
+import NoData from '../common/NoData';
 import sortByLatestDate from '../../utils/sortByLatestDate';
 
 const color = {

@@ -13,7 +13,7 @@ import {
 	Divider,
 	Heading
 } from '@chakra-ui/react';
-import NoData from '../dashboard/NoData';
+import NoData from '../common/NoData';
 import useDeepEffect from '../custom-hooks/useDeepEffect';
 
 const color = {
