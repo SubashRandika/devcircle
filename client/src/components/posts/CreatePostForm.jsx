@@ -45,12 +45,13 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const {
-		user: { name }
+		user: { name, avatar }
 	} = auth;
 	const { text } = errors;
 	const [postInfo, setPostInfo] = useState({
 		text: '',
-		name
+		name,
+		avatar
 	});
 
 	const handlePreviewMarkdown = () => {
@@ -136,7 +137,7 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 				<ModalContent>
 					<ModalHeader>Markdown Preview</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody>
+					<ModalBody mb='1rem'>
 						<ReactMarkdown
 							plugins={[gfm]}
 							renderers={renderers}

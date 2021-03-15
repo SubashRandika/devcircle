@@ -18,8 +18,9 @@ import {
 	FaCommentMedical,
 	FaTrashAlt
 } from 'react-icons/fa';
+import FeedCardBody from './FeedCardBody';
 
-function PostFeedItem() {
+function FeedCard({ post }) {
 	const [showComments, setShowComments] = useState(false);
 	const [showCommentText, setShowCommentText] = useState(false);
 
@@ -33,46 +34,8 @@ function PostFeedItem() {
 
 	return (
 		<React.Fragment>
-			<Heading as='h2' size='md' mb='1rem'>
-				Developer Feeds
-			</Heading>
-			<Box p={5} shadow='md' borderWidth='1px'>
-				<Flex justify='space-between' align='center'>
-					<Flex>
-						<Avatar
-							w='2.6rem'
-							h='2.6rem'
-							name='Ryan Florence'
-							src='https://bit.ly/ryan-florence'
-						/>
-						<Stack direction='column' spacing={0} ml='1rem'>
-							<Heading as='h1' fontSize='lg'>
-								Subash Randika
-							</Heading>
-							<Text fontSize='xs' color='#545454'>
-								October 14 at 1:51 PM
-							</Text>
-						</Stack>
-					</Flex>
-					<Tooltip
-						label='Delete post'
-						placement='left'
-						aria-label='Delete post'
-					>
-						<IconButton
-							variant='ghost'
-							colorScheme='red'
-							aria-label='Options'
-							icon={<FaTrashAlt />}
-							size='md'
-							borderRadius='50%'
-							cursor='pointer'
-						></IconButton>
-					</Tooltip>
-				</Flex>
-				<Box w='100%' mt='1rem'>
-					Post Markdown Body
-				</Box>
+			<Box p={5} shadow='md' borderWidth='1px' mb='1rem'>
+				<FeedCardBody post={post} />
 				<Box mt='1rem'>
 					<Flex justify='space-between' align='center' mb='0.9rem'>
 						<Box>
@@ -97,10 +60,10 @@ function PostFeedItem() {
 						</Box>
 						<Flex pt='0.7rem'>
 							<Text fontSize='sm' color='#545454'>
-								10 likes
+								{post.likes.length} likes
 							</Text>
 							<Text ml='1rem' fontSize='sm' color='#545454'>
-								3 comments
+								{post.comments.length} comments
 							</Text>
 						</Flex>
 					</Flex>
@@ -195,4 +158,4 @@ function PostFeedItem() {
 	);
 }
 
-export default PostFeedItem;
+export default FeedCard;

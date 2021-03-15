@@ -1,5 +1,40 @@
 import axios from 'axios';
-import { CREATE_POST, GET_ERRORS } from '../constants/types';
+import {
+	CREATE_POST,
+	GET_ALL_POSTS,
+	GET_ERRORS,
+	POST_LOADING
+} from '../constants/types';
+import { clearErrors } from './errorActions';
+
+// set posts is still loading
+export const setPostsLoading = (loading) => {
+	return {
+		type: POST_LOADING,
+		payload: loading
+	};
+};
+
+// get all posts
+export const getAllPosts = () => (dispatch) => {
+	dispatch(setPostsLoading(true));
+
+	axios
+		.get('/api/posts')
+		.then((res) => {
+			dispatch({
+				type: GET_ALL_POSTS,
+				payload: res.data
+			});
+			dispatch(clearErrors());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ALL_POSTS,
+				payload: []
+			});
+		});
+};
 
 // create a new post with post data
 export const createNewPost = (postInfo, toast) => (dispatch) => {
