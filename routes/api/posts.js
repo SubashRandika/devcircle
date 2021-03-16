@@ -9,16 +9,12 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
 // get all posts
-router.get(
-	'/',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		Post.find()
-			.sort({ date: -1 })
-			.then((posts) => res.status(200).json(posts))
-			.catch((err) => res.status(404).json({ posts: 'Cannot fetch posts' }));
-	}
-);
+router.get('/', (req, res) => {
+	Post.find()
+		.sort({ date: -1 })
+		.then((posts) => res.status(200).json(posts))
+		.catch((err) => res.status(404).json({ posts: 'Cannot fetch posts' }));
+});
 
 // get one post by id
 router.get(
@@ -29,69 +25,6 @@ router.get(
 			.then((post) => res.status(200).json(post))
 			.catch((err) =>
 				res.status(404).json({ post: 'No post exists with that id' })
-			);
-	}
-);
-
-// get only comments of a post by id
-router.get(
-	'/:id/comments',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		Post.findById(req.params.id)
-			.select('comments')
-			.populate({
-				path: 'comments.user',
-				select: ['name', 'avatar'],
-				model: User
-			})
-			.sort({ date: -1 })
-			.then((post) => {
-				const { comments } = post;
-
-				if (comments.length === 0) {
-					return res
-						.status(404)
-						.json({ comments: `No comments for post ${req.params.id}` });
-				}
-
-				return res.status(200).json(comments);
-			})
-			.catch((err) =>
-				res.status(400).json({
-					comments: `Unable to get comments for post ${req.params.id}`
-				})
-			);
-	}
-);
-
-// get only likes of a post by id
-router.get(
-	'/:id/likes',
-	passport.authenticate('jwt', { session: false }),
-	(req, res) => {
-		Post.findById(req.params.id)
-			.select('likes')
-			.populate({
-				path: 'likes.user',
-				select: ['name', 'avatar'],
-				model: User
-			})
-			.then((post) => {
-				const { likes } = post;
-
-				if (likes.length === 0) {
-					return res
-						.status(404)
-						.json({ likes: `No likes for post ${req.params.id}` });
-				}
-
-				return res.status(200).json(likes);
-			})
-			.catch((err) =>
-				res.status(400).json({
-					likes: `Unable to get likes for post ${req.params.id}`
-				})
 			);
 	}
 );
