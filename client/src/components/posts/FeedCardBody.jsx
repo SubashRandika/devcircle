@@ -10,6 +10,7 @@ import {
 	IconButton,
 	Tooltip
 } from '@chakra-ui/react';
+import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -23,7 +24,7 @@ const color = {
 
 dayjs.extend(relativeTime);
 
-function FeedCardBody({ post }) {
+function FeedCardBody({ post, auth }) {
 	const { text, name, avatar, date } = post;
 
 	return (
@@ -42,17 +43,23 @@ function FeedCardBody({ post }) {
 						</Text>
 					</Stack>
 				</Flex>
-				<Tooltip label='Delete post' placement='left' aria-label='Delete post'>
-					<IconButton
-						variant='ghost'
-						colorScheme='red'
-						aria-label='Options'
-						icon={<FaTrashAlt />}
-						size='md'
-						borderRadius='50%'
-						cursor='pointer'
-					></IconButton>
-				</Tooltip>
+				{post.user === auth.user.id ? (
+					<Tooltip
+						label='Delete post'
+						placement='left'
+						aria-label='Delete post'
+					>
+						<IconButton
+							variant='ghost'
+							colorScheme='red'
+							aria-label='Options'
+							icon={<FaTrashAlt />}
+							size='md'
+							borderRadius='50%'
+							cursor='pointer'
+						></IconButton>
+					</Tooltip>
+				) : null}
 			</Flex>
 			<Box w='100%' mt='1rem'>
 				<ReactMarkdown plugins={[gfm]} renderers={renderers} children={text} />
@@ -62,7 +69,12 @@ function FeedCardBody({ post }) {
 }
 
 FeedCardBody.propTypes = {
-	post: PropTypes.object.isRequired
+	post: PropTypes.object.isRequired,
+	auth: PropTypes.object.isRequired
 };
 
-export default FeedCardBody;
+const mapStateToProps = (state) => ({
+	auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(FeedCardBody);

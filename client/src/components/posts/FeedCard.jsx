@@ -1,35 +1,22 @@
 import React, { useState } from 'react';
-import {
-	Avatar,
-	Box,
-	Button,
-	Collapse,
-	Flex,
-	Heading,
-	IconButton,
-	Input,
-	Stack,
-	Text,
-	Tooltip
-} from '@chakra-ui/react';
-import {
-	FaRegComment,
-	FaRegThumbsUp,
-	FaCommentMedical,
-	FaTrashAlt
-} from 'react-icons/fa';
+import PropTypes from 'prop-types';
+import { Box, Button, Collapse, Flex, Text } from '@chakra-ui/react';
+import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa';
 import FeedCardBody from './FeedCardBody';
+import AddCommentForm from '../comments/AddCommentForm';
+import CommentCard from '../comments/CommentCard';
+
+const color = {
+	secondaryText: '#545454',
+	commentsBg: '#F7FAFC'
+};
 
 function FeedCard({ post }) {
 	const [showComments, setShowComments] = useState(false);
-	const [showCommentText, setShowCommentText] = useState(false);
+	const { likes, comments } = post;
 
 	const handleToggleComments = () => {
 		setShowComments(!showComments);
-	};
-
-	const handleShowLargeComment = () => {
-		setShowCommentText(!showCommentText);
 	};
 
 	return (
@@ -59,11 +46,11 @@ function FeedCard({ post }) {
 							</Button>
 						</Box>
 						<Flex pt='0.7rem'>
-							<Text fontSize='sm' color='#545454'>
-								{post.likes.length} likes
+							<Text fontSize='sm' color={`${color.secondaryText}`}>
+								{likes.length} likes
 							</Text>
-							<Text ml='1rem' fontSize='sm' color='#545454'>
-								{post.comments.length} comments
+							<Text ml='1rem' fontSize='sm' color={`${color.secondaryText}`}>
+								{comments.length} comments
 							</Text>
 						</Flex>
 					</Flex>
@@ -73,83 +60,9 @@ function FeedCard({ post }) {
 						padding='1rem'
 						unmountOnExit='true'
 					>
-						<Flex bgColor='#f9f9f9' p='1rem'>
-							<Avatar
-								size='sm'
-								name='Ryan Florence'
-								src='https://bit.ly/ryan-florence'
-							/>
-							<Input
-								placeholder='Type your comment here...'
-								size='sm'
-								bg='#ffffff'
-								m='0 1rem'
-							/>
-							<Tooltip label='Add Comment' aria-label='Add Comment'>
-								<IconButton
-									w='3.5rem'
-									h='2rem'
-									colorScheme='facebook'
-									aria-label='Search database'
-									icon={<FaCommentMedical fontSize='1.2rem' />}
-								/>
-							</Tooltip>
-						</Flex>
-						<Box bgColor='#F7FAFC'>
-							<Flex borderTop='0.063rem solid #f1f0f0' p='1rem'>
-								<Avatar
-									mr='1rem'
-									size='sm'
-									name='Dan Abrahmov'
-									src='https://bit.ly/dan-abramov'
-								/>
-								<Flex direction='column'>
-									<Flex justify='space-between' align='center'>
-										<Stack direction='row' spacing={4}>
-											<Heading as='h2' fontSize='md'>
-												Dan Abrahmov
-											</Heading>
-											<Text fontSize='xs' color='#545454' pt='0.063rem'>
-												3 min ago
-											</Text>
-										</Stack>
-										<Tooltip
-											label='Delete post'
-											placement='left'
-											aria-label='Delete post'
-										>
-											<IconButton
-												variant='ghost'
-												colorScheme='red'
-												aria-label='Options'
-												icon={<FaTrashAlt />}
-												size='md'
-												borderRadius='50%'
-												cursor='pointer'
-											></IconButton>
-										</Tooltip>
-									</Flex>
-									<Box>
-										<Collapse startingHeight={20} in={showCommentText}>
-											<Text fontSize='0.9rem'>
-												Anim pariatur cliche reprehenderit, enim eiusmod high
-												life accusamus terry richardson ad squid. Nihil anim
-												keffiyeh helvetica, craft beer labore wes anderson cred
-												nesciunt sapiente ea proident. lorem
-											</Text>
-										</Collapse>
-										<Button
-											fontSize='0.8rem'
-											colorScheme='linkedin'
-											variant='link'
-											onClick={handleShowLargeComment}
-											mt='0.5rem'
-										>
-											Show {showCommentText ? 'Less' : 'More'}
-										</Button>
-									</Box>
-								</Flex>
-							</Flex>
+						<AddCommentForm />
+						<Box bgColor={`${color.commentsBg}`}>
+							<CommentCard comment={{}} />
 						</Box>
 					</Collapse>
 				</Box>
@@ -157,5 +70,9 @@ function FeedCard({ post }) {
 		</React.Fragment>
 	);
 }
+
+FeedCard.propTypes = {
+	post: PropTypes.object.isRequired
+};
 
 export default FeedCard;
