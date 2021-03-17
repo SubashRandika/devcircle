@@ -3,7 +3,8 @@ import {
 	CREATE_POST,
 	GET_ALL_POSTS,
 	GET_ERRORS,
-	POST_LOADING
+	POST_LOADING,
+	REMOVE_POST
 } from '../constants/types';
 import { clearErrors } from './errorActions';
 
@@ -48,7 +49,35 @@ export const createNewPost = (postInfo, toast) => (dispatch) => {
 			toast({
 				title: 'Post created.',
 				description:
-					'We successfully created your post. Please check it your post wall.',
+					'Successfully created your post. Please check that in your feeds wall.',
+				status: 'success',
+				duration: 5000,
+				position: 'top',
+				isClosable: true
+			});
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
+// delete a post by id
+export const removePost = (postId, toast) => (dispatch) => {
+	axios
+		.delete(`/api/posts/${postId}`)
+		.then((res) => {
+			dispatch({
+				type: REMOVE_POST,
+				payload: postId
+			});
+
+			toast({
+				title: 'Post deleted.',
+				description:
+					'Post has been deleted successfully. Cannot be undone again.',
 				status: 'success',
 				duration: 5000,
 				position: 'top',

@@ -1,4 +1,9 @@
-import { CREATE_POST, GET_ALL_POSTS, POST_LOADING } from '../constants/types';
+import {
+	CREATE_POST,
+	GET_ALL_POSTS,
+	POST_LOADING,
+	REMOVE_POST
+} from '../constants/types';
 
 const initialState = {
 	posts: [],
@@ -23,6 +28,11 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				posts: action.payload,
 				loading: false
+			};
+		case REMOVE_POST:
+			return {
+				...state,
+				posts: state.posts.filter((post) => post._id !== action.payload)
 			};
 		default:
 			return state;

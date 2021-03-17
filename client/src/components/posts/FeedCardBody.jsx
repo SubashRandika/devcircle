@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
 	Flex,
@@ -8,7 +8,17 @@ import {
 	Text,
 	Avatar,
 	IconButton,
-	Tooltip
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
+	PopoverHeader,
+	PopoverArrow,
+	PopoverCloseButton,
+	PopoverBody,
+	PopoverFooter,
+	ButtonGroup,
+	Button,
+	useToast
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
@@ -17,6 +27,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import renderers from './renderConfigs';
+import { removePost } from '../../redux/actions/postActions';
 
 const color = {
 	secondaryTextColor: '#545454'
@@ -24,8 +35,14 @@ const color = {
 
 dayjs.extend(relativeTime);
 
-function FeedCardBody({ post, auth }) {
-	const { text, name, avatar, date } = post;
+function FeedCardBody({ post, auth, removePost }) {
+	const initialFocusRef = useRef();
+	const toast = useToast();
+	const { _id, text, name, avatar, date } = post;
+
+	const handleDeletePost = (id) => {
+		removePost(id, toast);
+	};
 
 	return (
 		<React.Fragment>
@@ -44,21 +61,44 @@ function FeedCardBody({ post, auth }) {
 					</Stack>
 				</Flex>
 				{post.user === auth.user.id ? (
-					<Tooltip
-						label='Delete post'
-						placement='left'
-						aria-label='Delete post'
+					<Popover
+						placement='bottom'
+						isLazy={true}
+						initialFocusRef={initialFocusRef}
 					>
-						<IconButton
-							variant='ghost'
-							colorScheme='red'
-							aria-label='Options'
-							icon={<FaTrashAlt />}
-							size='md'
-							borderRadius='50%'
-							cursor='pointer'
-						></IconButton>
-					</Tooltip>
+						<PopoverTrigger>
+							<IconButton
+								variant='ghost'
+								colorScheme='red'
+								aria-label='Options'
+								icon={<FaTrashAlt />}
+								size='md'
+								borderRadius='50%'
+								cursor='pointer'
+							></IconButton>
+						</PopoverTrigger>
+						<PopoverContent>
+							<PopoverHeader fontWeight='700'>
+								Delete Confirmation
+							</PopoverHeader>
+							<PopoverArrow />
+							<PopoverCloseButton />
+							<PopoverBody>
+								Are you sure you want to delete this post?
+							</PopoverBody>
+							<PopoverFooter d='flex' justifyContent='flex-end'>
+								<ButtonGroup size='sm'>
+									<Button
+										colorScheme='red'
+										ref={initialFocusRef}
+										onClick={() => handleDeletePost(_id)}
+									>
+										Delete
+									</Button>
+								</ButtonGroup>
+							</PopoverFooter>
+						</PopoverContent>
+					</Popover>
 				) : null}
 			</Flex>
 			<Box w='100%' mt='1rem'>
@@ -70,11 +110,14 @@ function FeedCardBody({ post, auth }) {
 
 FeedCardBody.propTypes = {
 	post: PropTypes.object.isRequired,
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	removePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(FeedCardBody);
+const mapDispatchToProps = { removePost };
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedCardBody);
