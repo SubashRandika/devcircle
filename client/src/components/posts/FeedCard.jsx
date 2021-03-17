@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Collapse, Flex, Text } from '@chakra-ui/react';
-import { FaRegComment, FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegComment, FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 import FeedCardBody from './FeedCardBody';
 import AddCommentForm from '../comments/AddCommentForm';
 import CommentCard from '../comments/CommentCard';
@@ -13,10 +13,15 @@ const color = {
 
 function FeedCard({ post }) {
 	const [showComments, setShowComments] = useState(false);
+	const [liked, setLiked] = useState(false);
 	const { likes, comments } = post;
 
 	const handleToggleComments = () => {
 		setShowComments(!showComments);
+	};
+
+	const handleLikeUnlikeClick = () => {
+		setLiked(!liked);
 	};
 
 	return (
@@ -27,12 +32,19 @@ function FeedCard({ post }) {
 					<Flex justify='space-between' align='center' mb='0.9rem'>
 						<Box>
 							<Button
-								colorScheme='linkedin'
+								colorScheme={liked ? 'blackAlpha' : 'linkedin'}
 								size='sm'
 								variant='ghost'
-								leftIcon={<FaRegThumbsUp fontSize='1rem' />}
+								leftIcon={
+									liked ? (
+										<FaRegThumbsDown fontSize='1rem' />
+									) : (
+										<FaRegThumbsUp fontSize='1rem' />
+									)
+								}
+								onClick={handleLikeUnlikeClick}
 							>
-								Like
+								{liked ? 'Dislike' : 'Like'}
 							</Button>
 							<Button
 								ml='1rem'
