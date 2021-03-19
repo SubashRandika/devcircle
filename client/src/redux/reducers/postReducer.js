@@ -2,7 +2,8 @@ import {
 	CREATE_POST,
 	GET_ALL_POSTS,
 	POST_LOADING,
-	REMOVE_POST
+	REMOVE_POST,
+	LIKE_DISLIKE_POST
 } from '../constants/types';
 
 const initialState = {
@@ -34,6 +35,19 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				posts: state.posts.filter((post) => post._id !== action.payload)
 			};
+		case LIKE_DISLIKE_POST:
+			const updatedPosts = [...state.posts];
+			const postIndex = state.posts.findIndex((post) => {
+				return post._id === action.payload._id;
+			});
+
+			updatedPosts.splice(postIndex, 1, action.payload);
+
+			return {
+				...state,
+				posts: updatedPosts
+			};
+
 		default:
 			return state;
 	}

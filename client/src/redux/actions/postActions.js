@@ -4,7 +4,8 @@ import {
 	GET_ALL_POSTS,
 	GET_ERRORS,
 	POST_LOADING,
-	REMOVE_POST
+	REMOVE_POST,
+	LIKE_DISLIKE_POST
 } from '../constants/types';
 import { clearErrors } from './errorActions';
 
@@ -82,6 +83,42 @@ export const removePost = (postId, toast) => (dispatch) => {
 				duration: 5000,
 				position: 'top',
 				isClosable: true
+			});
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
+// like a post by id
+export const likePost = (postId) => (dispatch) => {
+	axios
+		.post(`/api/posts/${postId}/like`)
+		.then((res) => {
+			dispatch({
+				type: LIKE_DISLIKE_POST,
+				payload: res.data
+			});
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
+// dislike a post by id
+export const dislikePost = (postId) => (dispatch) => {
+	axios
+		.post(`/api/posts/${postId}/unlike`)
+		.then((res) => {
+			dispatch({
+				type: LIKE_DISLIKE_POST,
+				payload: res.data
 			});
 		})
 		.catch((err) => {

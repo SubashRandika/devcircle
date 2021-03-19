@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Collapse, Flex, Text } from '@chakra-ui/react';
 import { FaRegComment, FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { likePost, dislikePost } from '../../redux/actions/postActions';
 import FeedCardBody from './FeedCardBody';
 import AddCommentForm from '../comments/AddCommentForm';
 import CommentCard from '../comments/CommentCard';
@@ -11,17 +13,25 @@ const color = {
 	commentsBg: '#F7FAFC'
 };
 
-function FeedCard({ post }) {
+function FeedCard({ auth, post, likePost, dislikePost }) {
+	const { id } = auth.user;
 	const [showComments, setShowComments] = useState(false);
-	const [liked, setLiked] = useState(false);
-	const { likes, comments } = post;
+	const { _id, likes, comments } = post;
 
 	const handleToggleComments = () => {
 		setShowComments(!showComments);
 	};
 
 	const handleLikeUnlikeClick = () => {
-		setLiked(!liked);
+		if (isSignInUserLiked()) {
+			dislikePost(_id);
+		} else {
+			likePost(_id);
+		}
+	};
+
+	const isSignInUserLiked = () => {
+		return post.likes.find((like) => like.user === id) ? true : false;
 	};
 
 	return (
@@ -32,11 +42,11 @@ function FeedCard({ post }) {
 					<Flex justify='space-between' align='center' mb='0.9rem'>
 						<Box>
 							<Button
-								colorScheme={liked ? 'blackAlpha' : 'linkedin'}
+								colorScheme={isSignInUserLiked() ? 'blackAlpha' : 'linkedin'}
 								size='sm'
 								variant='ghost'
 								leftIcon={
-									liked ? (
+									isSignInUserLiked() ? (
 										<FaRegThumbsDown fontSize='1rem' />
 									) : (
 										<FaRegThumbsUp fontSize='1rem' />
@@ -44,7 +54,7 @@ function FeedCard({ post }) {
 								}
 								onClick={handleLikeUnlikeClick}
 							>
-								{liked ? 'Dislike' : 'Like'}
+								{isSignInUserLiked() ? 'Dislike' : 'Like'}
 							</Button>
 							<Button
 								ml='1rem'
@@ -84,7 +94,16 @@ function FeedCard({ post }) {
 }
 
 FeedCard.propTypes = {
-	post: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	post: PropTypes.object.isRequired,
+	likePost: PropTypes.func.isRequired,
+	dislikePost: PropTypes.func.isRequired
 };
 
-export default FeedCard;
+const mapStateToProps = (state) => ({
+	auth: state.auth
+});
+
+const mapDispatchToProps = { likePost, dislikePost };
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedCard);
