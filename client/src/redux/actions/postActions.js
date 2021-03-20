@@ -47,6 +47,7 @@ export const createNewPost = (postInfo, toast) => (dispatch) => {
 				type: CREATE_POST,
 				payload: res.data
 			});
+			dispatch(clearErrors());
 			toast({
 				title: 'Post created.',
 				description:

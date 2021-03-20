@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
 	Button,
@@ -49,8 +49,8 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 	const { text } = errors;
 	const [postInfo, setPostInfo] = useState({
 		text: '',
-		name,
-		avatar
+		name: '',
+		avatar: ''
 	});
 
 	const handlePreviewMarkdown = () => {
@@ -65,11 +65,20 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 		};
 
 		createNewPost(newPost, toast);
+		setPostInfo({ text: '', name, avatar });
 	};
 
 	const handleOnChange = (e) => {
 		setPostInfo({ ...postInfo, [e.target.name]: e.target.value });
 	};
+
+	useEffect(() => {
+		setPostInfo({
+			text: '',
+			name,
+			avatar
+		});
+	}, [avatar, name]);
 
 	return (
 		<React.Fragment>
