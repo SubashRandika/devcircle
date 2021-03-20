@@ -86,7 +86,7 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 				as='form'
 				noValidate
 				onSubmit={handleOnSubmit}
-				isInvalid={Object.keys(errors).length !== 0}
+				isInvalid={'text' in errors}
 			>
 				<Flex direction='column'>
 					<Heading as='h2' size='md' mb='1rem'>

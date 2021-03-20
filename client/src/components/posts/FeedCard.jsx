@@ -82,9 +82,13 @@ function FeedCard({ auth, post, likePost, dislikePost }) {
 						padding='1rem'
 						unmountOnExit='true'
 					>
-						<AddCommentForm />
+						<AddCommentForm postId={_id} />
 						<Box bgColor={`${color.commentsBg}`}>
-							<CommentCard comment={{}} />
+							{comments?.length > 0
+								? comments.map((comment) => (
+										<CommentCard key={comment._id} comment={comment} />
+								  ))
+								: null}
 						</Box>
 					</Collapse>
 				</Box>

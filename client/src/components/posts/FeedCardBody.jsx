@@ -40,8 +40,8 @@ function FeedCardBody({ post, auth, removePost }) {
 	const toast = useToast();
 	const { _id, text, name, avatar, date } = post;
 
-	const handleDeletePost = (id) => {
-		removePost(id, toast);
+	const handleDeletePost = (postId) => {
+		removePost(postId, toast);
 	};
 
 	return (

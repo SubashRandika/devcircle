@@ -3,7 +3,8 @@ import {
 	GET_ALL_POSTS,
 	POST_LOADING,
 	REMOVE_POST,
-	LIKE_DISLIKE_POST
+	LIKE_DISLIKE_POST,
+	ADD_COMMENT
 } from '../constants/types';
 
 const initialState = {
@@ -46,7 +47,18 @@ const postReducer = (state = initialState, action) => {
 				...state,
 				posts: updatedPosts
 			};
+		case ADD_COMMENT:
+			const updatedComments = [...state.posts];
+			const existingPostIndex = state.posts.findIndex((post) => {
+				return post._id === action.payload._id;
+			});
 
+			updatedComments.splice(existingPostIndex, 1, action.payload);
+
+			return {
+				...state,
+				posts: updatedComments
+			};
 		default:
 			return state;
 	}

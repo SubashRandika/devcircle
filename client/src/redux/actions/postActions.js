@@ -5,7 +5,8 @@ import {
 	GET_ERRORS,
 	POST_LOADING,
 	REMOVE_POST,
-	LIKE_DISLIKE_POST
+	LIKE_DISLIKE_POST,
+	ADD_COMMENT
 } from '../constants/types';
 import { clearErrors } from './errorActions';
 
@@ -121,6 +122,25 @@ export const dislikePost = (postId) => (dispatch) => {
 				type: LIKE_DISLIKE_POST,
 				payload: res.data
 			});
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
+// comment on a post by id
+export const addComment = (postId, commentInfo) => (dispatch) => {
+	axios
+		.post(`/api/posts/${postId}/comment`, commentInfo)
+		.then((res) => {
+			dispatch({
+				type: ADD_COMMENT,
+				payload: res.data
+			});
+			dispatch(clearErrors());
 		})
 		.catch((err) => {
 			dispatch({
