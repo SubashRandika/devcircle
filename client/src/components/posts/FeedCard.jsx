@@ -86,7 +86,11 @@ function FeedCard({ auth, post, likePost, dislikePost }) {
 						<Box bgColor={`${color.commentsBg}`}>
 							{comments?.length > 0
 								? comments.map((comment) => (
-										<CommentCard key={comment._id} comment={comment} />
+										<CommentCard
+											key={comment._id}
+											postId={_id}
+											comment={comment}
+										/>
 								  ))
 								: null}
 						</Box>

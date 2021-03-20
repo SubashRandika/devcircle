@@ -4,12 +4,24 @@ import {
 	POST_LOADING,
 	REMOVE_POST,
 	LIKE_DISLIKE_POST,
-	ADD_COMMENT
+	ADD_COMMENT,
+	REMOVE_COMMENT
 } from '../constants/types';
 
 const initialState = {
 	posts: [],
 	loading: false
+};
+
+const getUpdatedPostState = (currentPosts, updatedPost) => {
+	const updatedPosts = [...currentPosts];
+	const existingPostIndex = currentPosts.findIndex((post) => {
+		return post._id === updatedPost._id;
+	});
+
+	updatedPosts.splice(existingPostIndex, 1, updatedPost);
+
+	return updatedPosts;
 };
 
 const postReducer = (state = initialState, action) => {
@@ -36,28 +48,19 @@ const postReducer = (state = initialState, action) => {
 				posts: state.posts.filter((post) => post._id !== action.payload)
 			};
 		case LIKE_DISLIKE_POST:
-			const updatedPosts = [...state.posts];
-			const postIndex = state.posts.findIndex((post) => {
-				return post._id === action.payload._id;
-			});
-
-			updatedPosts.splice(postIndex, 1, action.payload);
-
 			return {
 				...state,
-				posts: updatedPosts
+				posts: getUpdatedPostState(state.posts, action.payload)
 			};
 		case ADD_COMMENT:
-			const updatedComments = [...state.posts];
-			const existingPostIndex = state.posts.findIndex((post) => {
-				return post._id === action.payload._id;
-			});
-
-			updatedComments.splice(existingPostIndex, 1, action.payload);
-
 			return {
 				...state,
-				posts: updatedComments
+				posts: getUpdatedPostState(state.posts, action.payload)
+			};
+		case REMOVE_COMMENT:
+			return {
+				...state,
+				posts: getUpdatedPostState(state.posts, action.payload)
 			};
 		default:
 			return state;

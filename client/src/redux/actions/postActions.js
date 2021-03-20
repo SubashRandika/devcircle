@@ -6,7 +6,8 @@ import {
 	POST_LOADING,
 	REMOVE_POST,
 	LIKE_DISLIKE_POST,
-	ADD_COMMENT
+	ADD_COMMENT,
+	REMOVE_COMMENT
 } from '../constants/types';
 import { clearErrors } from './errorActions';
 
@@ -141,6 +142,34 @@ export const addComment = (postId, commentInfo) => (dispatch) => {
 				payload: res.data
 			});
 			dispatch(clearErrors());
+		})
+		.catch((err) => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
+
+// delete the comment by post id
+export const removeComment = (postId, commentId, toast) => (dispatch) => {
+	axios
+		.delete(`/api/posts/${postId}/comment/${commentId}`)
+		.then((res) => {
+			dispatch({
+				type: REMOVE_COMMENT,
+				payload: res.data
+			});
+
+			toast({
+				title: 'Comment deleted.',
+				description:
+					'Comment has been deleted successfully. Cannot be undone again.',
+				status: 'success',
+				duration: 5000,
+				position: 'top',
+				isClosable: true
+			});
 		})
 		.catch((err) => {
 			dispatch({

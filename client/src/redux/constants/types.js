@@ -20,3 +20,4 @@ export const GET_ALL_POSTS = 'GET_ALL_POSTS';
 export const REMOVE_POST = 'REMOVE_POST';
 export const LIKE_DISLIKE_POST = 'LIKE_DISLIKE_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const REMOVE_COMMENT = 'REMOVE_COMMENT';

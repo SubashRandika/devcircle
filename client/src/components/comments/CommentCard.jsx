@@ -18,10 +18,12 @@ import {
 	PopoverHeader,
 	PopoverTrigger,
 	Stack,
-	Text
+	Text,
+	useToast
 } from '@chakra-ui/react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
+import { removeComment } from '../../redux/actions/postActions';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -31,8 +33,9 @@ const color = {
 };
 
 dayjs.extend(relativeTime);
-function CommentCard({ comment, auth }) {
+function CommentCard({ postId, comment, auth, removeComment }) {
 	const initialFocusRef = useRef();
+	const toast = useToast();
 	const [showCommentText, setShowCommentText] = useState(false);
 	const { _id, comment: commentText, name, avatar, user, date } = comment;
 
@@ -40,8 +43,8 @@ function CommentCard({ comment, auth }) {
 		setShowCommentText(!showCommentText);
 	};
 
-	const handleDeleteComment = (commentId) => {
-		console.log('Comment Deleted');
+	const handleDeleteComment = () => {
+		removeComment(postId, _id, toast);
 	};
 
 	return (
@@ -103,7 +106,7 @@ function CommentCard({ comment, auth }) {
 									<Button
 										colorScheme='red'
 										ref={initialFocusRef}
-										onClick={() => handleDeleteComment(_id)}
+										onClick={handleDeleteComment}
 									>
 										Delete
 									</Button>
@@ -118,12 +121,16 @@ function CommentCard({ comment, auth }) {
 }
 
 CommentCard.propTypes = {
+	postId: PropTypes.string.isRequired,
 	comment: PropTypes.object.isRequired,
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	removeComment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(CommentCard);
+const mapDispatchToProps = { removeComment };
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentCard);
