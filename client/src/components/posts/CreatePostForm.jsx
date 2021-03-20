@@ -6,8 +6,6 @@ import {
 	FormControl,
 	FormErrorMessage,
 	Heading,
-	InputGroup,
-	InputRightElement,
 	Textarea,
 	Tooltip,
 	useToast,
@@ -17,7 +15,8 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalCloseButton,
-	ModalBody
+	ModalBody,
+	HStack
 } from '@chakra-ui/react';
 import { FaEye, FaFileSignature } from 'react-icons/fa';
 import { connect } from 'react-redux';
@@ -84,46 +83,43 @@ function CreatePostForm({ auth, errors, createNewPost }) {
 					<Heading as='h2' size='md' mb='1rem'>
 						Write something here...
 					</Heading>
-					<InputGroup>
-						<Textarea
-							name='text'
-							placeholder='Write your tech post here. This is markdown supported.'
-							value={postInfo.text}
-							size='sm'
-							rows='15'
-							onChange={handleOnChange}
-						/>
-						{postInfo.text.length > 10 ? (
-							<Tooltip
-								hasArrow
-								label='Preview Your Feed'
-								aria-label='preview your feed'
-							>
-								<InputRightElement
-									cursor='pointer'
-									onClick={handlePreviewMarkdown}
-									children={
-										<FaEye fontSize='1.5rem' color={`${color.primaryColor}`} />
-									}
-								/>
-							</Tooltip>
-						) : null}
-					</InputGroup>
+					<Textarea
+						name='text'
+						placeholder='Write your tech post here. This is markdown supported.'
+						value={postInfo.text}
+						size='sm'
+						rows='15'
+						onChange={handleOnChange}
+					/>
 					<FormErrorMessage {...formErrorStyles}>{text}</FormErrorMessage>
-					<Button
-						alignSelf='flex-end'
-						type='submit'
-						size='md'
-						width='10rem'
-						mt='1.8rem'
-						color={color.white}
-						bgColor={color.secondaryColor}
-						_hover={{ bg: color.primaryColor }}
-						_active={{ bg: color.primaryColor }}
-						leftIcon={<FaFileSignature />}
-					>
-						Create Post
-					</Button>
+					<HStack mt='1.6rem' spacing={4} d='flex' justify='flex-end'>
+						<Tooltip
+							hasArrow
+							label='Markdown preview of post'
+							aria-label='markdown preview of your post'
+						>
+							<Button
+								leftIcon={<FaEye fontSize='1.5rem' color='black' />}
+								isDisabled={postInfo.text.length > 10 ? false : true}
+								onClick={handlePreviewMarkdown}
+							>
+								Preview Post
+							</Button>
+						</Tooltip>
+						<Button
+							alignSelf='flex-end'
+							type='submit'
+							size='md'
+							width='10rem'
+							color={color.white}
+							bgColor={color.secondaryColor}
+							_hover={{ bg: color.primaryColor }}
+							_active={{ bg: color.primaryColor }}
+							leftIcon={<FaFileSignature />}
+						>
+							Create Post
+						</Button>
+					</HStack>
 				</Flex>
 			</FormControl>
 			<Modal
