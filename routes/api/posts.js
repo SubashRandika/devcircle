@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const validatePostInput = require('../../validation/post');
+const validateCommentInput = require('../../validation/comment');
 
 // get post model from
 const Post = require('../../models/Post');
@@ -194,7 +195,7 @@ router.post(
 	'/:id/comment',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
-		const { errors, isValid } = validatePostInput(req.body);
+		const { errors, isValid } = validateCommentInput(req.body);
 
 		// validate post payload
 		if (!isValid) {
@@ -204,7 +205,7 @@ router.post(
 		Post.findById(req.params.id)
 			.then((post) => {
 				const newComment = {
-					text: req.body.text,
+					comment: req.body.comment,
 					name: req.body.name,
 					avatar: req.body.avatar,
 					user: req.user.id
