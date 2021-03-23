@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Collapse, Flex, Text } from '@chakra-ui/react';
+import {
+	Avatar,
+	Box,
+	Button,
+	Collapse,
+	Flex,
+	List,
+	ListItem,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalHeader,
+	ModalOverlay,
+	Text,
+	useDisclosure
+} from '@chakra-ui/react';
 import { FaRegComment, FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { likePost, dislikePost } from '../../redux/actions/postActions';
@@ -17,6 +33,7 @@ function FeedCard({ auth, post, likePost, dislikePost }) {
 	const { id } = auth.user;
 	const [showComments, setShowComments] = useState(false);
 	const { _id, likes, comments } = post;
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const handleToggleComments = () => {
 		setShowComments(!showComments);
@@ -69,11 +86,45 @@ function FeedCard({ auth, post, likePost, dislikePost }) {
 						</Box>
 						<Flex pt='0.7rem'>
 							<Text fontSize='sm' color={`${color.secondaryText}`}>
-								{likes.length} likes
+								{likes.length}
+								{likes.length > 0 ? (
+									<Button
+										colorScheme='linkedin'
+										variant='link'
+										onClick={onOpen}
+									>
+										likes
+									</Button>
+								) : (
+									' likes'
+								)}
 							</Text>
 							<Text ml='1rem' fontSize='sm' color={`${color.secondaryText}`}>
 								{comments.length} comments
 							</Text>
+							{likes.length > 0 ? (
+								<Modal
+									onClose={onClose}
+									isOpen={isOpen}
+									isCentered
+									motionPreset='scale'
+								>
+									<ModalOverlay />
+									<ModalContent>
+										<ModalHeader>Likes</ModalHeader>
+										<ModalCloseButton />
+										<ModalBody>
+											<List spacing={3}>
+												{likes.map((like) => (
+													<ListItem key={like._id}>
+														<Avatar name={like.name} src={like.avatar} />
+													</ListItem>
+												))}
+											</List>
+										</ModalBody>
+									</ModalContent>
+								</Modal>
+							) : null}
 						</Flex>
 					</Flex>
 					<Collapse
