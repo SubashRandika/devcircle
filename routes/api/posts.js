@@ -121,14 +121,14 @@ router.post(
 						}
 
 						// save likes into the post
-						post.likes.unshift({ user: req.user.id });
+						post.likes.unshift({
+							user: req.user.id,
+							name: req.user.name,
+							avatar: req.user.avatar
+						});
 						post
 							.save()
-							.then((post) =>
-								res
-									.status(200)
-									.json({ ...post.toObject(), avatar: req.user.avatar })
-							)
+							.then((post) => res.status(200).json(post))
 							.catch((err) =>
 								res.status(400).json({ like: 'Unable to like the post' })
 							);
@@ -171,11 +171,7 @@ router.post(
 
 						post
 							.save()
-							.then((post) =>
-								res
-									.status(200)
-									.json({ ...post.toObject(), avatar: req.user.avatar })
-							)
+							.then((post) => res.status(200).json(post))
 							.catch((err) =>
 								res.status(400).json({ like: 'Unable to unlike the post' })
 							);
