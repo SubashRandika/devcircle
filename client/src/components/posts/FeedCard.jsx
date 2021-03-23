@@ -6,6 +6,7 @@ import {
 	Button,
 	Collapse,
 	Flex,
+	Heading,
 	List,
 	ListItem,
 	Modal,
@@ -14,11 +15,14 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
+	Stack,
 	Text,
 	useDisclosure
 } from '@chakra-ui/react';
 import { FaRegComment, FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { likePost, dislikePost } from '../../redux/actions/postActions';
 import FeedCardBody from './FeedCardBody';
 import AddCommentForm from '../comments/AddCommentForm';
@@ -29,6 +33,7 @@ const color = {
 	commentsBg: '#F7FAFC'
 };
 
+dayjs.extend(relativeTime);
 function FeedCard({ auth, post, likePost, dislikePost }) {
 	const { id } = auth.user;
 	const [showComments, setShowComments] = useState(false);
@@ -108,16 +113,44 @@ function FeedCard({ auth, post, likePost, dislikePost }) {
 									isOpen={isOpen}
 									isCentered
 									motionPreset='scale'
+									scrollBehavior='inside'
 								>
 									<ModalOverlay />
 									<ModalContent>
 										<ModalHeader>Likes</ModalHeader>
 										<ModalCloseButton />
-										<ModalBody>
+										<ModalBody mb='1rem'>
 											<List spacing={3}>
 												{likes.map((like) => (
 													<ListItem key={like._id}>
-														<Avatar name={like.name} src={like.avatar} />
+														<Flex>
+															<Avatar
+																w='2.6rem'
+																h='2.6rem'
+																name={like.name}
+																src={like.avatar}
+															/>
+															<Stack
+																direction='column'
+																spacing={0}
+																ml='1rem'
+																mt='0.2rem'
+															>
+																<Heading as='h1' fontSize='lg'>
+																	{like.name}
+																</Heading>
+																<Text
+																	fontSize='xs'
+																	color={`${color.secondaryTextColor}`}
+																>
+																	{dayjs().diff(dayjs(like.date), 'd') >= 1
+																		? dayjs(like.date).format(
+																				'MMMM D, YYYY h:mm a'
+																		  )
+																		: dayjs(like.date).fromNow()}
+																</Text>
+															</Stack>
+														</Flex>
 													</ListItem>
 												))}
 											</List>
