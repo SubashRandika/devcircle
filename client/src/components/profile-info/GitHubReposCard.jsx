@@ -66,7 +66,7 @@ function GitHubReposCard({ username }) {
 	return (
 		<Flex
 			direction='column'
-			w='21rem'
+			w='19rem'
 			p='1rem'
 			bg={color.cardBg}
 			boxShadow='xs'

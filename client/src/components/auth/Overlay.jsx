@@ -23,7 +23,7 @@ function Overlay({ isRightPanelActive, handleClick }) {
 				width='200%'
 				transform={isRightPanelActive ? 'translateX(50%)' : 'translateX(0)'}
 				transition='transform 0.6s ease-in-out'
-				backgroundImage='linear-gradient(to left bottom, #414f7a, #72578c, #a55d90, #d26686, #f17872)'
+				background='linear-gradient(to left bottom, #414f7a, #72578c, #a55d90, #d26686, #f17872)'
 			>
 				<Flex
 					as='div'

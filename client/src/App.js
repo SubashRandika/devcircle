@@ -1,24 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Container } from '@chakra-ui/react';
-import { Provider } from 'react-redux';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
-import { logoutUser, setCurrentUser } from './redux/actions/authActions';
-import { clearCurrentProfile } from './redux/actions/profileActions';
-import configureStore from './redux/configureStore';
-import Landing from './pages/Landing';
-import Authentication from './pages/Authentication';
-import Navbar from './components/layout/Navbar';
-import PrivateRoute from './components/common/PrivateRoute';
-import PublicRoute from './components/common/PublicRoute';
-import Dashboard from './components/dashboard/Dashboard';
-import Content from './components/layout/Content';
-import CreateProfile from './components/create-profile/CreateProfile';
-import UpdateProfile from './components/update-profile/UpdateProfile';
-import Profiles from './components/profile/Profiles';
-import Profile from './components/profile-info/Profile';
-import PostFeed from './components/posts/PostFeed';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Container } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { logoutUser, setCurrentUser } from "./redux/actions/authActions";
+import { clearCurrentProfile } from "./redux/actions/profileActions";
+import configureStore from "./redux/configureStore";
+import Landing from "./pages/Landing";
+import Authentication from "./pages/Authentication";
+import Navbar from "./components/layout/Navbar";
+import PrivateRoute from "./components/common/PrivateRoute";
+import PublicRoute from "./components/common/PublicRoute";
+import Dashboard from "./components/dashboard/Dashboard";
+import Content from "./components/layout/Content";
+import CreateProfile from "./components/create-profile/CreateProfile";
+import UpdateProfile from "./components/update-profile/UpdateProfile";
+import Profiles from "./components/profile/Profiles";
+import Profile from "./components/profile-info/Profile";
+import PostFeed from "./components/posts/PostFeed";
 
 const store = configureStore();
 
@@ -53,7 +53,7 @@ function App() {
 			<Router>
 				<Switch>
 					<PublicRoute exact path='/'>
-						<Container className='main_app' maxW='103.125rem'>
+						<Container className='main_app' maxW='8xl'>
 							<Landing />
 						</Container>
 					</PublicRoute>
@@ -65,13 +65,13 @@ function App() {
 					</PublicRoute>
 					<Route exact path='/profiles'>
 						<Navbar />
-						<Content maxW='95.625rem' mt='1.875rem' p='0'>
+						<Content maxW='8xl' mt='1.875rem' p='0'>
 							<Profiles />
 						</Content>
 					</Route>
 					<Route exact path='/profile/:handle'>
 						<Navbar />
-						<Content maxW='95.625rem' mt='1.875rem' p='0'>
+						<Content maxW='8xl' mt='1.875rem' p='0'>
 							<Profile />
 						</Content>
 					</Route>
@@ -83,19 +83,19 @@ function App() {
 					</PrivateRoute>
 					<PrivateRoute exact path='/create-profile'>
 						<Navbar />
-						<Container maxW='95.625rem' mt='1.875rem' p='0'>
+						<Container maxW='8xl' mt='1.875rem' p='0'>
 							<CreateProfile />
 						</Container>
 					</PrivateRoute>
 					<PrivateRoute exact path='/update-profile'>
 						<Navbar />
-						<Container maxW='95.625rem' mt='1.875rem' p='0'>
+						<Container maxW='8xl' mt='1.875rem' p='0'>
 							<UpdateProfile />
 						</Container>
 					</PrivateRoute>
 					<PrivateRoute exact path='/feeds'>
 						<Navbar />
-						<Container maxW='95.625rem' mt='1.875rem' p='0'>
+						<Container maxW='8xl' mt='1.875rem' p='0'>
 							<PostFeed />
 						</Container>
 					</PrivateRoute>

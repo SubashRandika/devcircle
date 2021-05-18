@@ -20,7 +20,7 @@ function BioSkillsCard({ name, bio, skills }) {
 	return (
 		<Flex
 			direction='column'
-			w='25rem'
+			w='24rem'
 			mt='1.5rem'
 			p='1rem'
 			bg={color.cardBg}

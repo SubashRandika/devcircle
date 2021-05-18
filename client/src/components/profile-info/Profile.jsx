@@ -43,7 +43,7 @@ function Profile({ profile, getProfileByHandle }) {
 							education={currentProfile.education}
 						/>
 					</Box>
-					<Box w='20rem'>
+					<Box w='19rem'>
 						<GitHubReposCard username={currentProfile.githubusername} />
 					</Box>
 				</React.Fragment>
@@ -52,7 +52,7 @@ function Profile({ profile, getProfileByHandle }) {
 	}
 
 	return (
-		<Flex m='0 -2.5rem' justify='center'>
+		<Flex justify='center'>
 			{profileContent}
 		</Flex>
 	);

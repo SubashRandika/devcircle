@@ -37,7 +37,7 @@ function ProfileInfoCard({ currentProfile }) {
 	const { facebook, linkedin, twitter, github, instagram, youtube } = social;
 
 	return (
-		<Flex w='25rem' justify='center' bg={color.cardBg}>
+		<Flex w='24rem' justify='center' bg={color.cardBg}>
 			<Box w='100%' h='20.625rem' boxShadow='xs'>
 				<Box
 					display='flex'

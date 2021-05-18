@@ -7,6 +7,13 @@ svg.home__blue-blob {
 	z-index: -1;
 }
 
+@media screen and (max-width: 96em) {
+	svg.home__blue-blob {
+		top: -50px;
+		right: -420px;
+	}
+}
+
 svg.home__footer-blob {
 	position: fixed;
 	top: 250px;
@@ -23,6 +30,15 @@ svg.home__computer-man {
 	z-index: -1;
 }
 
+@media screen and (max-width: 96em) {
+	svg.home__computer-man {
+		top: 240px;
+		right: 275px;
+		width: 435px;
+		height: 254px;
+	}
+}
+
 svg.home__profile-card {
 	position: fixed;
 	top: 230px;
@@ -30,11 +46,29 @@ svg.home__profile-card {
 	z-index: -1;
 }
 
+@media screen and (max-width: 96em) {
+	svg.home__profile-card {
+		width: 250px;
+		height: 95px;
+		top: 170px;
+		right: 290px;
+	}
+}
+
 svg.home__posting-woman {
 	position: fixed;
 	top: 475px;
 	right: 95px;
 	z-index: -1;
+}
+
+@media screen and (max-width: 96em) {
+	svg.home__posting-woman {
+		top: 370px;
+		right: 100px;
+		width: 315px;
+		height: 200px;
+	}
 }
 
 span.logo__text {

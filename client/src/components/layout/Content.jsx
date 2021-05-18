@@ -3,7 +3,7 @@ import { Container } from '@chakra-ui/react';
 
 function Content({ children }) {
 	return (
-		<Container ml='0' mr='0' p='2.2rem 8rem' maxW='none'>
+		<Container ml='0' mr='0' p='2.2rem 3rem' maxW='none'>
 			{children}
 		</Container>
 	);
