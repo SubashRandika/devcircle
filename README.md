@@ -1,4 +1,4 @@
-# DevCircle MERN Applications (In Progress) (MongoDB + Express + React JS + Node JS)
+# DevCircle MERN Applications (MongoDB + Express + React JS + Node JS)
 
 This full-stack project is a `DevCircle` social media application specially for developers to connect each other, share technical
 thoughts and coding(technical) questions, open source projects to share among all other developers around the world. Also can create attractive profile to boost their career.
